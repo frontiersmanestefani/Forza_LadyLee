@@ -1,0 +1,930 @@
+{% comment %}
+  ============================================================
+  FORZA - TU PRÓXIMA MOTO ESTÁ EN LADYLEE
+  Sección para Homepage de Shopify
+  Línea gráfica: Negro / Blanco / Rojo
+  ============================================================
+{% endcomment %}
+
+<section class="forza-buying">
+
+  <div class="forza-buying-container">
+
+    <!-- ENCABEZADO -->
+
+    <div class="forza-buying-header">
+
+      <div class="forza-buying-kicker">
+        FORZA · FUERZA SIN LÍMITES
+      </div>
+
+      <h2>
+        {{ section.settings.heading }}
+      </h2>
+
+      {% if section.settings.subheading != blank %}
+        <p>
+          {{ section.settings.subheading }}
+        </p>
+      {% endif %}
+
+    </div>
+
+
+    <!-- PASOS -->
+
+    <div class="forza-steps">
+
+
+      <!-- PASO 01 -->
+
+      <div class="forza-step">
+
+        <div class="forza-step-top">
+
+          <span class="forza-step-number">
+            01
+          </span>
+
+        </div>
+
+
+        <div class="forza-step-icon">
+
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+
+            <path
+              d="M10 42h8l7-15h14l7 15h8"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+
+            <circle
+              cx="18"
+              cy="44"
+              r="7"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+            />
+
+            <circle
+              cx="47"
+              cy="44"
+              r="7"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+            />
+
+            <path
+              d="M25 27l5-8h9l5 8"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+            />
+
+          </svg>
+
+        </div>
+
+
+        <h3>
+          {{ section.settings.step_1_title }}
+        </h3>
+
+
+        <p>
+          {{ section.settings.step_1_text }}
+        </p>
+
+      </div>
+
+
+      <!-- PASO 02 -->
+
+      <div class="forza-step">
+
+        <div class="forza-step-top">
+
+          <span class="forza-step-number">
+            02
+          </span>
+
+        </div>
+
+
+        <div class="forza-step-icon">
+
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+
+            <rect
+              x="8"
+              y="16"
+              width="48"
+              height="32"
+              rx="4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+            />
+
+            <path
+              d="M8 26h48"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+            />
+
+            <path
+              d="M17 37h14"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+            />
+
+            <path
+              d="M42 36v8M38 40h8"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+            />
+
+          </svg>
+
+        </div>
+
+
+        <h3>
+          {{ section.settings.step_2_title }}
+        </h3>
+
+
+        <p>
+          {{ section.settings.step_2_text }}
+        </p>
+
+      </div>
+
+
+      <!-- PASO 03 -->
+
+      <div class="forza-step">
+
+        <div class="forza-step-top">
+
+          <span class="forza-step-number">
+            03
+          </span>
+
+        </div>
+
+
+        <div class="forza-step-icon">
+
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+
+            <circle
+              cx="22"
+              cy="22"
+              r="9"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+            />
+
+            <path
+              d="M29 29l23 23"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+            />
+
+            <path
+              d="M42 42l5-5M47 47l5-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+            />
+
+          </svg>
+
+        </div>
+
+
+        <h3>
+          {{ section.settings.step_3_title }}
+        </h3>
+
+
+        <p>
+          {{ section.settings.step_3_text }}
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- CTA -->
+
+    {% if section.settings.collection != blank %}
+
+      <div class="forza-buying-cta">
+
+        <div class="forza-cta-copy">
+
+          <span>
+            {{ section.settings.cta_kicker }}
+          </span>
+
+          <strong>
+            {{ section.settings.cta_heading }}
+          </strong>
+
+        </div>
+
+
+        <a
+          href="{{ section.settings.collection.url }}"
+          class="forza-cta-button"
+        >
+
+          {{ section.settings.button_text }}
+
+          <span>
+            →
+          </span>
+
+        </a>
+
+      </div>
+
+    {% endif %}
+
+  </div>
+
+</section>
+
+
+<style>
+
+  /* ==========================================================
+     SECCIÓN
+  =========================================================== */
+
+  .forza-buying {
+
+    background: #f5f5f5;
+
+    color: #111111;
+
+    padding: 75px 20px;
+
+    position: relative;
+
+    overflow: hidden;
+
+  }
+
+
+  .forza-buying::after {
+
+    content: "";
+
+    position: absolute;
+
+    right: -70px;
+
+    bottom: -100px;
+
+    width: 250px;
+
+    height: 250px;
+
+    border: 35px solid #E60000;
+
+    transform: rotate(45deg);
+
+    opacity: .08;
+
+  }
+
+
+  .forza-buying-container {
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    position: relative;
+
+    z-index: 1;
+
+  }
+
+
+  /* ==========================================================
+     HEADER
+  =========================================================== */
+
+  .forza-buying-header {
+
+    text-align: center;
+
+    max-width: 750px;
+
+    margin: 0 auto 55px;
+
+  }
+
+
+  .forza-buying-kicker {
+
+    color: #E60000;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 10px;
+
+  }
+
+
+  .forza-buying-header h2 {
+
+    color: #111111;
+
+    font-size: clamp(30px, 4vw, 48px);
+
+    line-height: 1.05;
+
+    margin: 0 0 15px;
+
+    font-weight: 900;
+
+    text-transform: uppercase;
+
+    letter-spacing: -1px;
+
+  }
+
+
+  .forza-buying-header p {
+
+    color: #666666;
+
+    font-size: 17px;
+
+    line-height: 1.6;
+
+    margin: 0;
+
+  }
+
+
+  /* ==========================================================
+     PASOS
+  =========================================================== */
+
+  .forza-steps {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 0;
+
+    position: relative;
+
+  }
+
+
+  .forza-steps::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 34px;
+
+    left: 16.66%;
+
+    right: 16.66%;
+
+    height: 1px;
+
+    background: #cccccc;
+
+  }
+
+
+  /* ==========================================================
+     STEP
+  =========================================================== */
+
+  .forza-step {
+
+    position: relative;
+
+    text-align: center;
+
+    padding: 0 35px 30px;
+
+  }
+
+
+  .forza-step-top {
+
+    height: 68px;
+
+    position: relative;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    margin-bottom: 20px;
+
+  }
+
+
+  .forza-step-number {
+
+    width: 68px;
+
+    height: 68px;
+
+    background: #111111;
+
+    color: #ffffff;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 18px;
+
+    font-weight: 900;
+
+    position: relative;
+
+    z-index: 2;
+
+    border: 4px solid #f5f5f5;
+
+  }
+
+
+  /* ==========================================================
+     ICONOS
+  =========================================================== */
+
+  .forza-step-icon {
+
+    width: 48px;
+
+    height: 48px;
+
+    margin: 0 auto 20px;
+
+    color: #E60000;
+
+  }
+
+
+  .forza-step-icon svg {
+
+    width: 100%;
+
+    height: 100%;
+
+  }
+
+
+  /* ==========================================================
+     TITULOS
+  =========================================================== */
+
+  .forza-step h3 {
+
+    color: #111111;
+
+    font-size: 19px;
+
+    line-height: 1.2;
+
+    font-weight: 900;
+
+    text-transform: uppercase;
+
+    margin: 0 0 10px;
+
+  }
+
+
+  /* ==========================================================
+     TEXTO
+  =========================================================== */
+
+  .forza-step p {
+
+    color: #666666;
+
+    font-size: 14px;
+
+    line-height: 1.65;
+
+    margin: 0 auto;
+
+    max-width: 280px;
+
+  }
+
+
+  /* ==========================================================
+     CTA
+  =========================================================== */
+
+  .forza-buying-cta {
+
+    margin-top: 25px;
+
+    background: #111111;
+
+    color: #ffffff;
+
+    padding: 27px 32px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 25px;
+
+  }
+
+
+  .forza-cta-copy span {
+
+    display: block;
+
+    color: #E60000;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 5px;
+
+  }
+
+
+  .forza-cta-copy strong {
+
+    display: block;
+
+    color: #ffffff;
+
+    font-size: 23px;
+
+    line-height: 1.2;
+
+    font-weight: 900;
+
+    text-transform: uppercase;
+
+  }
+
+
+  /* ==========================================================
+     BOTÓN
+  =========================================================== */
+
+  .forza-cta-button {
+
+    background: #E60000;
+
+    color: #ffffff !important;
+
+    padding: 15px 25px;
+
+    text-decoration: none !important;
+
+    font-size: 13px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+    white-space: nowrap;
+
+    transition:
+      background .2s ease,
+      color .2s ease;
+
+  }
+
+
+  .forza-cta-button span {
+
+    margin-left: 9px;
+
+    font-size: 18px;
+
+  }
+
+
+  .forza-cta-button:hover {
+
+    background: #ffffff;
+
+    color: #111111 !important;
+
+  }
+
+
+  /* ==========================================================
+     TABLET
+  =========================================================== */
+
+  @media screen and (max-width: 800px) {
+
+    .forza-buying {
+
+      padding: 60px 20px;
+
+    }
+
+
+    .forza-steps {
+
+      grid-template-columns: 1fr;
+
+      gap: 40px;
+
+    }
+
+
+    .forza-steps::before {
+
+      display: none;
+
+    }
+
+
+    .forza-step {
+
+      padding: 0 20px;
+
+    }
+
+
+    .forza-step-top {
+
+      margin-bottom: 15px;
+
+    }
+
+
+    .forza-buying-cta {
+
+      flex-direction: column;
+
+      align-items: flex-start;
+
+    }
+
+
+    .forza-cta-button {
+
+      width: 100%;
+
+      text-align: center;
+
+      box-sizing: border-box;
+
+    }
+
+  }
+
+
+  /* ==========================================================
+     MOBILE
+  =========================================================== */
+
+  @media screen and (max-width: 600px) {
+
+    .forza-buying {
+
+      padding: 50px 15px;
+
+    }
+
+
+    .forza-buying-header {
+
+      margin-bottom: 40px;
+
+    }
+
+
+    .forza-buying-header h2 {
+
+      font-size: 30px;
+
+    }
+
+
+    .forza-buying-header p {
+
+      font-size: 15px;
+
+    }
+
+
+    .forza-step {
+
+      padding: 0 10px;
+
+    }
+
+
+    .forza-step h3 {
+
+      font-size: 18px;
+
+    }
+
+
+    .forza-buying-cta {
+
+      padding: 25px 20px;
+
+    }
+
+
+    .forza-cta-copy strong {
+
+      font-size: 20px;
+
+    }
+
+  }
+
+</style>
+
+
+{% schema %}
+
+{
+
+  "name": "Forza - Compra",
+
+  "tag": "section",
+
+  "class": "section-forza-buying",
+
+
+  "settings": [
+
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Tu próxima moto está en Lady Lee"
+    },
+
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Descripción",
+      "default": "Elige tu modelo, encuentra la forma de pago que se adapte a ti y hazla parte de tu día a día."
+    },
+
+
+    {
+      "type": "header",
+      "content": "Paso 01"
+    },
+
+    {
+      "type": "text",
+      "id": "step_1_title",
+      "label": "Título",
+      "default": "Elige tu modelo"
+    },
+
+    {
+      "type": "textarea",
+      "id": "step_1_text",
+      "label": "Descripción",
+      "default": "Conoce las opciones Forza y encuentra la motocicleta que se adapta a tu forma de conducir."
+    },
+
+
+    {
+      "type": "header",
+      "content": "Paso 02"
+    },
+
+    {
+      "type": "text",
+      "id": "step_2_title",
+      "label": "Título",
+      "default": "Elige cómo pagar"
+    },
+
+    {
+      "type": "textarea",
+      "id": "step_2_text",
+      "label": "Descripción",
+      "default": "Compra con las opciones de pago y financiamiento disponibles."
+    },
+
+
+    {
+      "type": "header",
+      "content": "Paso 03"
+    },
+
+    {
+      "type": "text",
+      "id": "step_3_title",
+      "label": "Título",
+      "default": "Hazla tuya"
+    },
+
+    {
+      "type": "textarea",
+      "id": "step_3_text",
+      "label": "Descripción",
+      "default": "Completa tu compra y consulta las opciones de entrega o retiro disponibles."
+    },
+
+
+    {
+      "type": "header",
+      "content": "Botón"
+    },
+
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colección"
+    },
+
+    {
+      "type": "text",
+      "id": "cta_kicker",
+      "label": "Texto pequeño",
+      "default": "FORZA · FUERZA SIN LÍMITES"
+    },
+
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "Título del CTA",
+      "default": "Conoce nuestra colección de motocicletas"
+    },
+
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto del botón",
+      "default": "VER MOTOS"
+    }
+
+  ],
+
+
+  "presets": [
+
+    {
+      "name": "Forza - Compra"
+    }
+
+  ]
+
+}
+
+{% endschema %}
