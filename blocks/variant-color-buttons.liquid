@@ -1,0 +1,90 @@
+{% comment %}
+  ============================================================
+  COLORES DE LOS BOTONES DE VARIANTE
+
+  Pinta el boton de color seleccionado con el color real de la moto,
+  en vez del negro que usa el tema para todos.
+
+  No dibuja nada: solo emite CSS. Se agrega una vez a la ficha de
+  producto y sirve para todos los productos.
+
+  Funciona redefiniendo, en cada boton, las tres variables que el tema
+  usa para el estado seleccionado:
+    --color-selected-variant-background
+    --color-selected-variant-text
+    --color-selected-variant-border
+
+  La tabla se edita desde el editor de temas, una linea por color:
+    Nombre:#fondo:#texto          (el borde toma el color del fondo)
+    Nombre:#fondo:#texto:#borde   (borde propio, util para Blanco)
+
+  El nombre tiene que coincidir con el valor de la opcion en Shopify,
+  sin importar mayusculas.
+  ============================================================
+{% endcomment %}
+
+{% liquid
+  assign rows = block.settings.color_map | strip | newline_to_br
+  assign rows = rows | replace: '<br />', '|' | replace: '<br/>', '|' | replace: '<br>', '|'
+  assign pairs = rows | split: '|'
+%}
+
+{% style %}
+  {% for pair in pairs %}
+    {%- assign parts = pair | strip | split: ':' -%}
+    {%- assign value_name = parts[0] | strip -%}
+    {%- assign bg = parts[1] | strip -%}
+    {%- assign fg = parts[2] | strip -%}
+    {%- assign bd = parts[3] | strip -%}
+    {%- if bd == blank -%}
+      {%- assign bd = bg -%}
+    {%- endif -%}
+    {%- if value_name != blank and bg != blank -%}
+      .variant-option__button-label:has(input[value="{{ value_name }}" i]) {
+        --color-selected-variant-background: {{ bg }};
+        --color-selected-variant-text: {{ fg | default: '#ffffff' }};
+        --color-selected-variant-border: {{ bd }};
+        --color-selected-variant-hover-background: {{ bg }};
+        --color-selected-variant-hover-text: {{ fg | default: '#ffffff' }};
+        --color-selected-variant-hover-border: {{ bd }};
+      }
+    {%- endif -%}
+  {% endfor %}
+{% endstyle %}
+
+{%- if request.design_mode -%}
+  <div class="variant-color-buttons-note" {{ block.shopify_attributes }}>
+    Este bloque no se ve en la tienda. Solo pinta el botón de color seleccionado
+    con el color real de cada variante.
+  </div>
+  <style>
+    .variant-color-buttons-note {
+      padding: 14px 16px;
+      border: 1px dashed #999999;
+      color: #666666;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+  </style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Colores de las variantes",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "color_map",
+      "label": "Tabla de colores",
+      "info": "Una línea por color, con el formato Nombre:#fondo:#texto. Podés agregar un cuarto valor para el borde, útil cuando el fondo es claro. El nombre tiene que coincidir con el valor de la opción en Shopify.",
+      "default": "Negro:#111111:#FFFFFF\nGris:#9A9A9A:#FFFFFF\nBlanco:#FFFFFF:#111111:#111111\nRojo:#E60000:#FFFFFF\nVerde:#00A650:#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Colores de las variantes"
+    }
+  ],
+  "tag": null
+}
+{% endschema %}

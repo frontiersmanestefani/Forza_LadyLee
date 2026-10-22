@@ -2,16 +2,19 @@
   ============================================================
   LADY LEE · ENLACE AL MISMO MODELO
 
-  Bloque para la ficha de producto. Lleva al usuario al producto
-  equivalente en ladylee.net, siguiendo el color que tenga
-  seleccionado.
+  Bloque para la ficha de producto. Toda la tarjeta es un enlace que
+  lleva al producto equivalente en ladylee.net, siguiendo el color
+  que el usuario tenga seleccionado.
 
   El puente son los SKU: cada variante de Forza tiene un SKU que es
   el mismo codigo con el que termina el handle del producto en Lady
   Lee. La tabla se edita desde el editor de temas, sin tocar codigo.
 
-  Si un SKU no esta en la tabla, el boton lleva a la busqueda de Lady
+  Si un SKU no esta en la tabla, el enlace lleva a la busqueda de Lady
   Lee por ese SKU en vez de quedar roto.
+
+  En la descripcion se puede escribir [producto] y se reemplaza por el
+  nombre del producto, asi un mismo texto sirve para las 9 motos.
   ============================================================
 {% endcomment %}
 
@@ -26,8 +29,11 @@
   assign rows = block.settings.sku_map | strip | newline_to_br
   assign rows = rows | replace: '<br />', '|' | replace: '<br/>', '|' | replace: '<br>', '|'
   assign pairs = rows | split: '|'
+
   assign current_variant = ll_product.selected_or_first_available_variant
   assign current_sku = current_variant.sku | strip
+
+  assign card_text = block.settings.text | replace: '[producto]', ll_product.title
 %}
 
 {%- comment -%} URL inicial, segun la variante seleccionada al cargar {%- endcomment -%}
@@ -40,9 +46,21 @@
     {%- assign initial_url = ll_base | append: pair_handle -%}
   {%- endif -%}
 {%- endfor -%}
+{%- assign is_mapped = true -%}
 {%- if initial_url == blank -%}
+  {%- assign is_mapped = false -%}
   {%- assign sku_query = current_sku | url_encode -%}
   {%- assign initial_url = ll_search | append: sku_query -%}
+{%- endif -%}
+
+{%- comment -%}
+  Si el SKU no esta en la tabla y la casilla esta activada, la tarjeta no
+  se muestra. Asi las bicicletas y cualquier producto sin equivalente en
+  Lady Lee no sacan una tarjeta que no lleva a ninguna ficha.
+{%- endcomment -%}
+{%- assign show_card = true -%}
+{%- if block.settings.hide_when_unmapped and is_mapped == false -%}
+  {%- assign show_card = false -%}
 {%- endif -%}
 
 {%- comment -%} Mapa variante -> URL, para seguir el color sin recargar {%- endcomment -%}
@@ -68,25 +86,89 @@
   }
 {%- endcapture -%}
 
+{%- if show_card == false -%}
+  {%- if request.design_mode -%}
+    <div class="ladylee-link-unmapped" {{ block.shopify_attributes }}>
+      Este producto no está en la tabla SKU → Lady Lee{% if current_sku != blank %} (SKU {{ current_sku }}){% endif %}, así que la tarjeta no se muestra en la tienda. Este aviso solo se ve en el editor.
+    </div>
+    <style>
+      .ladylee-link-unmapped {
+        padding: 14px 16px;
+        border: 1px dashed #999999;
+        color: #666666;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+    </style>
+  {%- endif -%}
+{%- else -%}
+
 <div
   class="ladylee-link-block ladylee-link-{{ uid }}"
   {{ block.shopify_attributes }}
 >
-  {% if block.settings.heading != blank %}
-    <h3 class="ladylee-link-{{ uid }}__heading">{{ block.settings.heading }}</h3>
-  {% endif %}
-
-  {% if block.settings.text != blank %}
-    <p class="ladylee-link-{{ uid }}__text">{{ block.settings.text }}</p>
-  {% endif %}
-
   <a
-    class="ladylee-link-{{ uid }}__button ladylee-link-block__button"
+    class="ladylee-link-block__card ladylee-link-{{ uid }}__card"
     href="{{ initial_url }}"
     {%- if block.settings.open_new_tab %} target="_blank" rel="noopener"{% endif -%}
   >
-    {{ block.settings.button_label }}
-    <span aria-hidden="true">&rarr;</span>
+    {% if block.settings.icon_source == 'moto' %}
+      <span class="ladylee-link-{{ uid }}__icon">
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+          <path
+            d="M10 42h8l7-15h14l7 15h8"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <circle cx="18" cy="44" r="7" fill="none" stroke="currentColor" stroke-width="3" />
+          <circle cx="47" cy="44" r="7" fill="none" stroke="currentColor" stroke-width="3" />
+          <path
+            d="M25 27l5-8h9l5 8"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+        </svg>
+      </span>
+    {% elsif block.settings.icon_source == 'fontawesome' and block.settings.icon_class != blank %}
+      <span
+        class="ladylee-link-{{ uid }}__icon ladylee-link-{{ uid }}__icon--font"
+        aria-hidden="true"
+      >
+        <i class="{{ block.settings.icon_class }}"></i>
+      </span>
+    {% elsif block.settings.icon_source == 'image' and block.settings.icon != blank %}
+      <img
+        class="ladylee-link-{{ uid }}__icon"
+        src="{{ block.settings.icon | image_url: width: 240 }}"
+        alt=""
+        width="{{ block.settings.icon.width }}"
+        height="{{ block.settings.icon.height }}"
+        loading="lazy"
+      >
+    {% endif %}
+
+    {% if block.settings.show_product_title and ll_product.title != blank %}
+      <span class="ladylee-link-{{ uid }}__kicker">{{ ll_product.title }}</span>
+    {% endif %}
+
+    {% if block.settings.heading != blank %}
+      <h3 class="ladylee-link-{{ uid }}__heading">{{ block.settings.heading }}</h3>
+    {% endif %}
+
+    {% if card_text != blank %}
+      <span class="ladylee-link-{{ uid }}__text">{{ card_text }}</span>
+    {% endif %}
+
+    <span class="ladylee-link-{{ uid }}__button">
+      {{ block.settings.button_label }}
+      <span aria-hidden="true">&rarr;</span>
+    </span>
+
     {%- if block.settings.open_new_tab -%}
       <span class="ladylee-link-block__sr">(se abre en una ventana nueva)</span>
     {%- endif -%}
@@ -102,48 +184,92 @@
     max-width: 100%;
   }
 
+  .ladylee-link-{{ uid }}__card {
+    display: block;
+    padding: 24px 26px;
+    background: {{ block.settings.background_color }};
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    text-align: center;
+    text-decoration: none !important;
+    transition: border-color .2s ease, transform .2s ease;
+  }
+
+  .ladylee-link-{{ uid }}__card:hover {
+    border-color: {{ block.settings.accent_color }};
+    transform: translateY(-2px);
+  }
+
+  .ladylee-link-{{ uid }}__card:focus-visible {
+    outline: 3px solid {{ block.settings.accent_color }};
+    outline-offset: 3px;
+  }
+
+  .ladylee-link-{{ uid }}__icon {
+    display: block;
+    width: {{ block.settings.icon_width }}px;
+    height: auto;
+    margin: 0 auto 10px;
+    color: {{ block.settings.accent_color }};
+  }
+
+  .ladylee-link-{{ uid }}__icon svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .ladylee-link-{{ uid }}__icon--font {
+    width: auto;
+    font-size: {{ block.settings.icon_width }}px;
+    line-height: 1;
+  }
+
+  .ladylee-link-{{ uid }}__kicker {
+    display: block;
+    margin-bottom: 6px;
+    color: {{ block.settings.accent_color }};
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
   .ladylee-link-{{ uid }}__heading {
     margin: 0 0 8px;
     color: {{ block.settings.text_color }};
     font-family: var(--font-heading--family, sans-serif);
-    font-size: clamp(20px, 2.5vw, 28px);
+    font-size: clamp(18px, 2.2vw, 24px);
     line-height: 1.15;
     text-transform: uppercase;
   }
 
   .ladylee-link-{{ uid }}__text {
-    margin: 0 0 18px;
+    display: block;
+    margin: 0 auto 18px;
+    max-width: 420px;
     color: {{ block.settings.text_color }};
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.6;
   }
 
   .ladylee-link-{{ uid }}__button {
     display: inline-block;
-    padding: 15px 25px;
+    padding: 13px 24px;
     background: {{ block.settings.accent_color }};
-    border: 2px solid {{ block.settings.accent_color }};
-    color: #ffffff !important;
-    text-decoration: none !important;
-    font-size: 13px;
+    color: #ffffff;
+    font-size: 12px;
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
-    transition: background .2s ease, border-color .2s ease;
+    transition: background .2s ease;
   }
 
   .ladylee-link-{{ uid }}__button span[aria-hidden] {
-    margin-left: 9px;
+    margin-left: 8px;
   }
 
-  .ladylee-link-{{ uid }}__button:hover {
+  .ladylee-link-{{ uid }}__card:hover .ladylee-link-{{ uid }}__button {
     background: {{ block.settings.text_color }};
-    border-color: {{ block.settings.text_color }};
-  }
-
-  .ladylee-link-{{ uid }}__button:focus-visible {
-    outline: 3px solid {{ block.settings.text_color }};
-    outline-offset: 3px;
   }
 
   .ladylee-link-block__sr {
@@ -170,7 +296,7 @@
       if (wrapper.dataset.ladyleeReady) return;
       wrapper.dataset.ladyleeReady = '1';
 
-      var anchor = wrapper.querySelector('.ladylee-link-block__button');
+      var anchor = wrapper.querySelector('.ladylee-link-block__card');
       var mapTag = wrapper.querySelector('.ladylee-link-block__map');
       if (!anchor || !mapTag) return;
 
@@ -216,10 +342,53 @@
   })();
 </script>
 
+{%- endif -%}
+
 {% schema %}
 {
   "name": "Lady Lee - Enlace",
   "settings": [
+    {
+      "type": "select",
+      "id": "icon_source",
+      "label": "Ícono",
+      "options": [
+        { "value": "fontawesome", "label": "Font Awesome (el de la descripción)" },
+        { "value": "moto", "label": "Moto (incluido en el tema)" },
+        { "value": "image", "label": "Imagen propia" },
+        { "value": "none", "label": "Sin ícono" }
+      ],
+      "default": "fontawesome"
+    },
+    {
+      "type": "text",
+      "id": "icon_class",
+      "label": "Clase del ícono de Font Awesome",
+      "default": "fa-solid fa-motorcycle",
+      "info": "Solo se usa con la opción Font Awesome. La fuente la carga la descripción del producto; si algún día quitás ese <link>, el ícono deja de verse."
+    },
+    {
+      "type": "image_picker",
+      "id": "icon",
+      "label": "Imagen del ícono",
+      "info": "Solo se usa si arriba elegiste \"Imagen propia\"."
+    },
+    {
+      "type": "range",
+      "id": "icon_width",
+      "label": "Tamaño del ícono",
+      "min": 24,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_title",
+      "label": "Mostrar el nombre del producto arriba",
+      "default": true
+    },
     {
       "type": "text",
       "id": "heading",
@@ -230,7 +399,8 @@
       "type": "textarea",
       "id": "text",
       "label": "Descripción",
-      "default": "Conoce la disponibilidad, el precio y las opciones de compra en Lady Lee."
+      "info": "Escribí [producto] donde quieras que aparezca el nombre de la moto.",
+      "default": "Conoce la disponibilidad, el precio y las opciones de compra de la [producto] en Lady Lee."
     },
     {
       "type": "text",
@@ -252,8 +422,15 @@
       "type": "textarea",
       "id": "sku_map",
       "label": "Tabla SKU → producto en Lady Lee",
-      "info": "Una línea por producto, con el formato SKU:handle. El handle es lo que va después de /products/ en la URL de Lady Lee. Si un SKU no está en la lista, el botón lleva a la búsqueda por ese SKU.",
+      "info": "Una línea por producto, con el formato SKU:handle. El handle es lo que va después de /products/ en la URL de Lady Lee. Si un SKU no está en la lista, el enlace lleva a la búsqueda por ese SKU.",
       "default": "1117351:forza-motocicleta-forza-fz150-negro-1117351\n1117352:forza-motocicleta-forza-fz150-rojo-1117352\n1117353:forza-motocicleta-forza-fz150-blanco-1117353\n1117586:forza-motocicleta-forza-fz150a-rojo-1117586\n1117587:forza-motocicleta-forza-fz150a-gris-1117587\n1117588:forza-motocicleta-forza-fz150a-negro-1117588\n1117589:forza-motocicleta-forza-fzx200-rojo-1117589\n1117590:forza-motocicleta-forza-fzx200-verde-1117590\n1117591:forza-motocicleta-forza-fzx200-blanco-1117591"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_when_unmapped",
+      "label": "Ocultar la tarjeta si el SKU no está en la tabla",
+      "default": true,
+      "info": "Útil para las bicicletas y cualquier producto sin equivalente en Lady Lee. Si lo desactivás, esos productos muestran la tarjeta con un enlace a la búsqueda por SKU."
     },
     {
       "type": "checkbox",
@@ -269,7 +446,7 @@
     {
       "type": "color",
       "id": "accent_color",
-      "label": "Color del botón",
+      "label": "Color de acento",
       "default": "#E60000"
     },
     {
@@ -277,6 +454,28 @@
       "id": "text_color",
       "label": "Color del texto",
       "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Fondo de la tarjeta",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Borde de la tarjeta",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Grosor del borde",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
     },
     {
       "type": "range",

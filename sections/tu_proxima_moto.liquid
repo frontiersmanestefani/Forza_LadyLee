@@ -273,42 +273,6 @@
     </div>
 
 
-    <!-- CTA -->
-
-    {% if section.settings.collection != blank %}
-
-      <div class="forza-buying-cta">
-
-        <div class="forza-cta-copy">
-
-          <span>
-            {{ section.settings.cta_kicker }}
-          </span>
-
-          <strong>
-            {{ section.settings.cta_heading }}
-          </strong>
-
-        </div>
-
-
-        <a
-          href="{{ section.settings.collection.url }}"
-          class="forza-cta-button"
-        >
-
-          {{ section.settings.button_text }}
-
-          <span>
-            →
-          </span>
-
-        </a>
-
-      </div>
-
-    {% endif %}
-
   </div>
 
 </section>
@@ -640,112 +604,6 @@
 
 
   /* ==========================================================
-     CTA
-  =========================================================== */
-
-  .forza-buying-cta {
-
-    margin-top: 25px;
-
-    background: #111111;
-
-    color: #ffffff;
-
-    padding: 27px 32px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 25px;
-
-  }
-
-
-  .forza-cta-copy span {
-
-    display: block;
-
-    color: #E60000;
-
-    font-size: 11px;
-
-    font-weight: 800;
-
-    letter-spacing: 2px;
-
-    margin-bottom: 5px;
-
-  }
-
-
-  .forza-cta-copy strong {
-
-    display: block;
-
-    color: #ffffff;
-
-    font-size: 23px;
-
-    line-height: 1.2;
-
-    font-weight: 900;
-
-    text-transform: uppercase;
-
-  }
-
-
-  /* ==========================================================
-     BOTÓN
-  =========================================================== */
-
-  .forza-cta-button {
-
-    background: #E60000;
-
-    color: #ffffff !important;
-
-    padding: 15px 25px;
-
-    text-decoration: none !important;
-
-    font-size: 13px;
-
-    font-weight: 900;
-
-    letter-spacing: 1px;
-
-    white-space: nowrap;
-
-    transition:
-      background .2s ease,
-      color .2s ease;
-
-  }
-
-
-  .forza-cta-button span {
-
-    margin-left: 9px;
-
-    font-size: 18px;
-
-  }
-
-
-  .forza-cta-button:hover {
-
-    background: #ffffff;
-
-    color: #111111 !important;
-
-  }
-
-
-  /* ==========================================================
      TABLET
   =========================================================== */
 
@@ -787,25 +645,6 @@
 
     }
 
-
-    .forza-buying-cta {
-
-      flex-direction: column;
-
-      align-items: flex-start;
-
-    }
-
-
-    .forza-cta-button {
-
-      width: 100%;
-
-      text-align: center;
-
-      box-sizing: border-box;
-
-    }
 
   }
 
@@ -857,19 +696,6 @@
 
     }
 
-
-    .forza-buying-cta {
-
-      padding: 25px 20px;
-
-    }
-
-
-    .forza-cta-copy strong {
-
-      font-size: 20px;
-
-    }
 
   }
 
@@ -1014,39 +840,6 @@
       "label": "Abrir los botones de los pasos en una pestaña nueva",
       "default": false,
       "info": "Activalo solo si el enlace sale de esta tienda."
-    },
-
-
-    {
-      "type": "header",
-      "content": "Botón del CTA"
-    },
-
-    {
-      "type": "collection",
-      "id": "collection",
-      "label": "Colección"
-    },
-
-    {
-      "type": "text",
-      "id": "cta_kicker",
-      "label": "Texto pequeño",
-      "default": "FORZA · FUERZA SIN LÍMITES"
-    },
-
-    {
-      "type": "text",
-      "id": "cta_heading",
-      "label": "Título del CTA",
-      "default": "Conoce nuestra colección de motocicletas"
-    },
-
-    {
-      "type": "text",
-      "id": "button_text",
-      "label": "Texto del botón",
-      "default": "VER MOTOS"
     }
 
   ],
