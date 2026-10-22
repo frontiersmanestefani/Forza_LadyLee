@@ -339,14 +339,13 @@
         "subheading": "Elige tu modelo, encuentra la forma de pago que se adapte a ti y hazla parte de tu día a día.",
         "step_1_title": "Elige tu modelo",
         "step_1_text": "Conoce las opciones Forza y encuentra la motocicleta que se adapta a tu forma de conducir.",
+        "step_1_button_label": "VER MODELOS",
+        "step_1_button_link": "/collections/motocicletas-2-ruedas",
+        "step_buttons_new_tab": false,
         "step_2_title": "Elige cómo pagar",
         "step_2_text": "Compra con las opciones de pago y financiamiento disponibles.",
         "step_3_title": "Hazla tuya",
-        "step_3_text": "Completa tu compra y consulta las opciones de entrega o retiro disponibles.",
-        "collection": "motocicletas-2-ruedas",
-        "cta_kicker": "FORZA · FUERZA SIN LÍMITES",
-        "cta_heading": "Conoce nuestra colección de motocicletas",
-        "button_text": "VER MOTOS"
+        "step_3_text": "Completa tu compra y consulta las opciones de entrega o retiro disponibles."
       }
     },
     "collection_list_QzDJPx": {

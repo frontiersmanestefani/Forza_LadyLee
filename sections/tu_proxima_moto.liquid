@@ -102,6 +102,19 @@
           {{ section.settings.step_1_text }}
         </p>
 
+        {%- if section.settings.step_1_button_label != blank and section.settings.step_1_button_link != blank -%}
+          <a
+            class="forza-step-button"
+            href="{{ section.settings.step_1_button_link }}"
+            {%- if section.settings.step_buttons_new_tab %} target="_blank" rel="noopener"{% endif -%}
+          >
+            {{ section.settings.step_1_button_label }}
+            {%- if section.settings.step_buttons_new_tab -%}
+              <span class="forza-visually-hidden">(se abre en una ventana nueva)</span>
+            {%- endif -%}
+          </a>
+        {%- endif -%}
+
       </div>
 
 
@@ -170,6 +183,19 @@
           {{ section.settings.step_2_text }}
         </p>
 
+        {%- if section.settings.step_2_button_label != blank and section.settings.step_2_button_link != blank -%}
+          <a
+            class="forza-step-button"
+            href="{{ section.settings.step_2_button_link }}"
+            {%- if section.settings.step_buttons_new_tab %} target="_blank" rel="noopener"{% endif -%}
+          >
+            {{ section.settings.step_2_button_label }}
+            {%- if section.settings.step_buttons_new_tab -%}
+              <span class="forza-visually-hidden">(se abre en una ventana nueva)</span>
+            {%- endif -%}
+          </a>
+        {%- endif -%}
+
       </div>
 
 
@@ -229,46 +255,23 @@
           {{ section.settings.step_3_text }}
         </p>
 
+        {%- if section.settings.step_3_button_label != blank and section.settings.step_3_button_link != blank -%}
+          <a
+            class="forza-step-button"
+            href="{{ section.settings.step_3_button_link }}"
+            {%- if section.settings.step_buttons_new_tab %} target="_blank" rel="noopener"{% endif -%}
+          >
+            {{ section.settings.step_3_button_label }}
+            {%- if section.settings.step_buttons_new_tab -%}
+              <span class="forza-visually-hidden">(se abre en una ventana nueva)</span>
+            {%- endif -%}
+          </a>
+        {%- endif -%}
+
       </div>
 
     </div>
 
-
-    <!-- CTA -->
-
-    {% if section.settings.collection != blank %}
-
-      <div class="forza-buying-cta">
-
-        <div class="forza-cta-copy">
-
-          <span>
-            {{ section.settings.cta_kicker }}
-          </span>
-
-          <strong>
-            {{ section.settings.cta_heading }}
-          </strong>
-
-        </div>
-
-
-        <a
-          href="{{ section.settings.collection.url }}"
-          class="forza-cta-button"
-        >
-
-          {{ section.settings.button_text }}
-
-          <span>
-            →
-          </span>
-
-        </a>
-
-      </div>
-
-    {% endif %}
 
   </div>
 
@@ -558,108 +561,45 @@
 
 
   /* ==========================================================
-     CTA
+     BOTÓN DE CADA PASO
   =========================================================== */
 
-  .forza-buying-cta {
-
-    margin-top: 25px;
-
+  .forza-step-button {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 12px 22px;
     background: #111111;
-
-    color: #ffffff;
-
-    padding: 27px 32px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 25px;
-
-  }
-
-
-  .forza-cta-copy span {
-
-    display: block;
-
-    color: #E60000;
-
-    font-size: 11px;
-
-    font-weight: 800;
-
-    letter-spacing: 2px;
-
-    margin-bottom: 5px;
-
-  }
-
-
-  .forza-cta-copy strong {
-
-    display: block;
-
-    color: #ffffff;
-
-    font-size: 23px;
-
-    line-height: 1.2;
-
-    font-weight: 900;
-
-    text-transform: uppercase;
-
-  }
-
-
-  /* ==========================================================
-     BOTÓN
-  =========================================================== */
-
-  .forza-cta-button {
-
-    background: #E60000;
-
+    border: 2px solid #111111;
     color: #ffffff !important;
-
-    padding: 15px 25px;
-
     text-decoration: none !important;
-
-    font-size: 13px;
-
-    font-weight: 900;
-
+    font-size: 12px;
+    font-weight: 700;
     letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: background .2s ease, border-color .2s ease;
+  }
 
+  .forza-step-button:hover {
+    background: #E60000;
+    border-color: #E60000;
+  }
+
+  .forza-step-button:focus-visible {
+    outline: 3px solid #111111;
+    outline-offset: 3px;
+  }
+
+  .forza-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
     white-space: nowrap;
-
-    transition:
-      background .2s ease,
-      color .2s ease;
-
-  }
-
-
-  .forza-cta-button span {
-
-    margin-left: 9px;
-
-    font-size: 18px;
-
-  }
-
-
-  .forza-cta-button:hover {
-
-    background: #ffffff;
-
-    color: #111111 !important;
-
+    border: 0;
   }
 
 
@@ -705,25 +645,6 @@
 
     }
 
-
-    .forza-buying-cta {
-
-      flex-direction: column;
-
-      align-items: flex-start;
-
-    }
-
-
-    .forza-cta-button {
-
-      width: 100%;
-
-      text-align: center;
-
-      box-sizing: border-box;
-
-    }
 
   }
 
@@ -775,19 +696,6 @@
 
     }
 
-
-    .forza-buying-cta {
-
-      padding: 25px 20px;
-
-    }
-
-
-    .forza-cta-copy strong {
-
-      font-size: 20px;
-
-    }
 
   }
 
@@ -841,6 +749,19 @@
       "default": "Conoce las opciones Forza y encuentra la motocicleta que se adapta a tu forma de conducir."
     },
 
+    {
+      "type": "text",
+      "id": "step_1_button_label",
+      "label": "Texto del botón",
+      "info": "Dejalo vacío para no mostrar botón en este paso."
+    },
+
+    {
+      "type": "url",
+      "id": "step_1_button_link",
+      "label": "Enlace del botón"
+    },
+
 
     {
       "type": "header",
@@ -859,6 +780,19 @@
       "id": "step_2_text",
       "label": "Descripción",
       "default": "Compra con las opciones de pago y financiamiento disponibles."
+    },
+
+    {
+      "type": "text",
+      "id": "step_2_button_label",
+      "label": "Texto del botón",
+      "info": "Dejalo vacío para no mostrar botón en este paso."
+    },
+
+    {
+      "type": "url",
+      "id": "step_2_button_link",
+      "label": "Enlace del botón"
     },
 
 
@@ -881,37 +815,31 @@
       "default": "Completa tu compra y consulta las opciones de entrega o retiro disponibles."
     },
 
+    {
+      "type": "text",
+      "id": "step_3_button_label",
+      "label": "Texto del botón",
+      "info": "Dejalo vacío para no mostrar botón en este paso."
+    },
+
+    {
+      "type": "url",
+      "id": "step_3_button_link",
+      "label": "Enlace del botón"
+    },
+
 
     {
       "type": "header",
-      "content": "Botón"
+      "content": "Botones de los pasos"
     },
 
     {
-      "type": "collection",
-      "id": "collection",
-      "label": "Colección"
-    },
-
-    {
-      "type": "text",
-      "id": "cta_kicker",
-      "label": "Texto pequeño",
-      "default": "FORZA · FUERZA SIN LÍMITES"
-    },
-
-    {
-      "type": "text",
-      "id": "cta_heading",
-      "label": "Título del CTA",
-      "default": "Conoce nuestra colección de motocicletas"
-    },
-
-    {
-      "type": "text",
-      "id": "button_text",
-      "label": "Texto del botón",
-      "default": "VER MOTOS"
+      "type": "checkbox",
+      "id": "step_buttons_new_tab",
+      "label": "Abrir los botones de los pasos en una pestaña nueva",
+      "default": false,
+      "info": "Activalo solo si el enlace sale de esta tienda."
     }
 
   ],

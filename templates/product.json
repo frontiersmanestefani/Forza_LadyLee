@@ -129,6 +129,19 @@
             "padding-inline-end": 12
           },
           "blocks": {
+            "ladylee_link_1": {
+              "type": "ladylee-link",
+              "settings": {
+                "icon_source": "fontawesome",
+                "icon_class": "fa-solid fa-motorcycle",
+                "icon_width": 36,
+                "accent_color": "#fc0087",
+                "text_color": "#111111",
+                "background_color": "#FAFAFA",
+                "border_color": "#000000",
+                "border_width": 2
+              }
+            },
             "text_tefwj7": {
               "type": "text",
               "name": "t:names.title",
@@ -194,7 +207,7 @@
               "type": "variant-picker",
               "settings": {
                 "variant_style": "buttons",
-                "show_swatches": true,
+                "show_swatches": false,
                 "option_label_text_color": "",
                 "variant_style_class": "default",
                 "custom_variant_background": "{{ settings.color_palette.background }}",
@@ -211,6 +224,10 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "variant_colors_1": {
+              "type": "variant-color-buttons",
+              "settings": {}
             },
             "text_gXMUag": {
               "type": "text",
@@ -305,7 +322,9 @@
             "reviews",
             "price_a7krng",
             "variant_picker_R3rGDr",
+            "variant_colors_1",
             "text_gXMUag",
+            "ladylee_link_1",
             "buy_buttons_eYQEYi"
           ]
         }

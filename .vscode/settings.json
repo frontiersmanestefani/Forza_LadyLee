@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "**/templates/*.json": "jsonc",
+    "**/sections/*.json": "jsonc",
+    "**/config/settings_schema.json": "jsonc"
+  }
+}
