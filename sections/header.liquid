@@ -458,8 +458,8 @@ endcapture
       %}
     {% endcapture %}
 
-    {% assign content = content | strip %}
-    {% if content != blank %}
+    {% assign stripped_content = content | strip %}
+    {% if stripped_content != blank %}
       <div
         class="{{ class | strip }}"
         ref="headerRowTop"
@@ -546,8 +546,7 @@ endcapture
 
     position: absolute;
     top: 0;
-    left: 0;
-    right: 0;
+    inset-inline: 0;
 
     z-index: var(--layer-overlay);
 
@@ -664,6 +663,12 @@ endcapture
     .header[data-sticky-state='active'] {
       view-transition-name: none;
     }
+  }
+
+  /* A view-transition-name makes the header a backdrop root, so the menu drawer's backdrop-filter
+     would dim only the header instead of the page. */
+  .header[data-sticky-state='active']:has(.menu-drawer-container[open]) {
+    view-transition-name: none;
   }
 
   .header[data-sticky-state='idle'] {
@@ -1042,12 +1047,16 @@ endcapture
     }
   }
 
-  /* Transparent header layout. Keep this in sync with snippets/section.liquid's first-section height compensation. */
-  body:has(#header-component[transparent]) .content-for-layout > .shopify-section:first-child {
+  /* Transparent header layout. Keep this in sync with snippets/section.liquid's first-section height compensation.
+     Header-dependent page rules use #header-group as the :has() subject and reach the page with `~`.
+     With body as the subject, every [open] or [aria-expanded] change in the header restyles the whole page. */
+  #header-group:has(> .header-section > #header-component[transparent])
+    ~ .content-for-layout
+    > .shopify-section:first-child {
     margin-top: calc(var(--header-group-height) * -1);
   }
 
-  body:has(#header-component[transparent]) #header-group > .header-section {
+  #header-group:has(> .header-section > #header-component[transparent]) > .header-section {
     z-index: var(--layer-menu-drawer);
   }
 
@@ -1055,7 +1064,7 @@ endcapture
   the rest of the page content. Keep a class at the end of this selector: a `*` there
   gives the browser nothing to filter on, and it then recalculates the styles of every
   element below. */
-  body:has(#header-component[transparent]) #header-group > .shopify-section:not(.header-section) {
+  #header-group:has(> .header-section > #header-component[transparent]) > .shopify-section:not(.header-section) {
     z-index: calc(var(--layer-menu-drawer) - 1);
   }
 
@@ -1093,7 +1102,7 @@ endcapture
   .dropdown-localization__button .svg-wrapper.icon-caret {
     height: var(--icon-size-xs);
     width: var(--icon-size-xs);
-    right: var(--margin-xs);
+    inset-inline-end: var(--margin-xs);
     top: calc(50% - var(--padding-2xs));
     flex-shrink: 0;
     transition: transform var(--animation-speed) var(--animation-easing);
@@ -1186,18 +1195,19 @@ endcapture
   }
 
   dropdown-localization-component .localization-wrapper.right-bound {
-    right: 0;
-    left: unset;
+    inset-inline-end: 0;
+    inset-inline-start: unset;
   }
 
   dropdown-localization-component .localization-wrapper.left-bound {
-    left: -8px;
-    right: unset;
+    inset-inline-start: -8px;
+    inset-inline-end: unset;
   }
 
   /* Additional specificity due to dropdown-localization-component getting a low score */
   dropdown-localization-component .language-selector.language-selector {
-    padding: 10px 8px 10px 16px;
+    padding-block: 10px;
+    padding-inline: 16px 8px;
   }
 
   dropdown-localization-component .localization-form__currency {
@@ -1260,15 +1270,15 @@ endcapture
       "options": [
         {
           "value": "left",
-          "label": "t:options.left"
+          "label": "t:options.direction_start"
         },
         {
           "value": "center",
-          "label": "t:options.center"
+          "label": "t:options.direction_center"
         },
         {
           "value": "right",
-          "label": "t:options.right"
+          "label": "t:options.direction_end"
         }
       ],
       "default": "center"
@@ -1284,15 +1294,15 @@ endcapture
       "options": [
         {
           "value": "left",
-          "label": "t:options.left"
+          "label": "t:options.direction_start"
         },
         {
           "value": "center",
-          "label": "t:options.center"
+          "label": "t:options.direction_center"
         },
         {
           "value": "right",
-          "label": "t:options.right"
+          "label": "t:options.direction_end"
         }
       ],
       "default": "left"
@@ -1324,7 +1334,7 @@ endcapture
     {
       "type": "link_list",
       "id": "customer_account_menu",
-      "label": "t:settings.menu",
+      "label": "t:settings.customer_account_menu",
       "default": "customer-account-main-menu"
     },
     {
@@ -1344,11 +1354,11 @@ endcapture
       "options": [
         {
           "value": "left",
-          "label": "t:options.left"
+          "label": "t:options.direction_start"
         },
         {
           "value": "right",
-          "label": "t:options.right"
+          "label": "t:options.direction_end"
         }
       ],
       "default": "right",
@@ -1456,11 +1466,11 @@ endcapture
       "options": [
         {
           "value": "left",
-          "label": "t:options.left"
+          "label": "t:options.direction_start"
         },
         {
           "value": "right",
-          "label": "t:options.right"
+          "label": "t:options.direction_end"
         }
       ],
       "default": "right",

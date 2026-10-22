@@ -1,7 +1,6 @@
 
-
 <div
-  class="page-content"
+  class="page-content page-content--full-width"
   style="
     {% if block.settings.text_color != blank %}
       --color: {{ block.settings.text_color }};
@@ -15,12 +14,31 @@
 </div>
 
 {% stylesheet %}
-  .page-content {
+  .page-content--full-width {
     color: var(--color, inherit);
+    width: 100vw;
+    max-width: none !important;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding-left: 0;
+    padding-right: 0;
+    box-sizing: border-box;
   }
 
-  .page-content a {
+  .page-content--full-width a {
     color: currentcolor;
+  }
+
+  .page-content--full-width rte-formatter {
+    display: block;
+    width: 100%;
+    max-width: none !important;
+  }
+
+  .page-content--full-width img,
+  .page-content--full-width video,
+  .page-content--full-width iframe {
+    max-width: 100%;
   }
 {% endstylesheet %}
 
