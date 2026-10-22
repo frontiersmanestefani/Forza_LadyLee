@@ -6,6 +6,16 @@
   ============================================================
 {% endcomment %}
 
+{%- liquid
+  assign veil = section.settings.overlay_opacity | times: 0.01
+  assign veil_mid = veil | times: 0.94
+  assign veil_top = veil | times: 0.6
+
+  assign veil_hover = section.settings.overlay_opacity_hover | times: 0.01
+  assign veil_hover_mid = veil_hover | times: 0.7
+  assign veil_hover_top = veil_hover | times: 0.25
+-%}
+
 <section class="forza-diferenciales">
 
   <div class="forza-container">
@@ -46,58 +56,24 @@
 
       <div class="forza-card">
 
-        <div class="forza-icon">
+        {%- if section.settings.image_1 != blank -%}
+          <div
+            class="forza-card__media"
+            style="background-image: url({{ section.settings.image_1 | image_url: width: 900 }}); background-position: {{ section.settings.position_1 }};"
+          ></div>
+        {%- endif -%}
 
-          <svg viewBox="0 0 64 64" aria-hidden="true">
+        <div class="forza-card__veil"></div>
 
-            <path
-              d="M12 25h26l7 8v13H12z"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
+        <div class="forza-number">01</div>
 
-            <path
-              d="M38 25v-7h8l5 7"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
+        <div class="forza-card__content">
 
-            <circle
-              cx="24"
-              cy="46"
-              r="5"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
+          <h3>{{ section.settings.title_1 }}</h3>
 
-            <circle
-              cx="43"
-              cy="46"
-              r="5"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
-
-          </svg>
+          <p>{{ section.settings.text_1 }}</p>
 
         </div>
-
-        <div class="forza-number">
-          01
-        </div>
-
-        <h3>
-          Motor 149 cc
-        </h3>
-
-        <p>
-          Motores de <strong>4 tiempos</strong> diseñados para
-          ofrecer un equilibrio entre desempeño y eficiencia.
-        </p>
 
       </div>
 
@@ -108,61 +84,24 @@
 
       <div class="forza-card">
 
-        <div class="forza-icon">
+        {%- if section.settings.image_2 != blank -%}
+          <div
+            class="forza-card__media"
+            style="background-image: url({{ section.settings.image_2 | image_url: width: 900 }}); background-position: {{ section.settings.position_2 }};"
+          ></div>
+        {%- endif -%}
 
-          <svg viewBox="0 0 64 64" aria-hidden="true">
+        <div class="forza-card__veil"></div>
 
-            <circle
-              cx="20"
-              cy="20"
-              r="7"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
+        <div class="forza-number">02</div>
 
-            <circle
-              cx="44"
-              cy="20"
-              r="7"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
+        <div class="forza-card__content">
 
-            <circle
-              cx="32"
-              cy="44"
-              r="7"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
+          <h3>{{ section.settings.title_2 }}</h3>
 
-            <path
-              d="M20 27v9l12 8M44 27v9L32 44"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
-
-          </svg>
+          <p>{{ section.settings.text_2 }}</p>
 
         </div>
-
-        <div class="forza-number">
-          02
-        </div>
-
-        <h3>
-          Tú eliges cómo conducir
-        </h3>
-
-        <p>
-          La familia Forza ofrece opciones para diferentes estilos
-          de conducción: <strong>5 velocidades manuales</strong> o
-          <strong>transmisión automática</strong>.
-        </p>
 
       </div>
 
@@ -173,48 +112,24 @@
 
       <div class="forza-card">
 
-        <div class="forza-icon">
+        {%- if section.settings.image_3 != blank -%}
+          <div
+            class="forza-card__media"
+            style="background-image: url({{ section.settings.image_3 | image_url: width: 900 }}); background-position: {{ section.settings.position_3 }};"
+          ></div>
+        {%- endif -%}
 
-          <svg viewBox="0 0 64 64" aria-hidden="true">
+        <div class="forza-card__veil"></div>
 
-            <path
-              d="M22 12h20v40H22z"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
+        <div class="forza-number">03</div>
 
-            <path
-              d="M27 18h10M27 24h10"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
+        <div class="forza-card__content">
 
-            <path
-              d="M32 34c-5 7-7 10-7 14a7 7 0 0 0 14 0c0-4-2-7-7-14z"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
+          <h3>{{ section.settings.title_3 }}</h3>
 
-          </svg>
+          <p>{{ section.settings.text_3 }}</p>
 
         </div>
-
-        <div class="forza-number">
-          03
-        </div>
-
-        <h3>
-          Eficiencia para tu día
-        </h3>
-
-        <p>
-          Rendimiento de combustible de hasta
-          <strong>45 km/L</strong> en la FZ150A y hasta
-          <strong>35 km/L</strong> en la FZ150.
-        </p>
 
       </div>
 
@@ -225,52 +140,24 @@
 
       <div class="forza-card">
 
-        <div class="forza-icon">
+        {%- if section.settings.image_4 != blank -%}
+          <div
+            class="forza-card__media"
+            style="background-image: url({{ section.settings.image_4 | image_url: width: 900 }}); background-position: {{ section.settings.position_4 }};"
+          ></div>
+        {%- endif -%}
 
-          <svg viewBox="0 0 64 64" aria-hidden="true">
+        <div class="forza-card__veil"></div>
 
-            <rect
-              x="12"
-              y="20"
-              width="40"
-              height="30"
-              rx="3"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
+        <div class="forza-number">04</div>
 
-            <path
-              d="M20 20v-6h24v6"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
+        <div class="forza-card__content">
 
-            <path
-              d="M25 32h14M32 25v14"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
+          <h3>{{ section.settings.title_4 }}</h3>
 
-          </svg>
+          <p>{{ section.settings.text_4 }}</p>
 
         </div>
-
-        <div class="forza-number">
-          04
-        </div>
-
-        <h3>
-          Pensadas para el día a día
-        </h3>
-
-        <p>
-          Encuentra características funcionales como
-          <strong>parrilla o baúl de carga</strong>, según el modelo,
-          para llevar lo que necesitas.
-        </p>
 
       </div>
 
@@ -281,52 +168,24 @@
 
       <div class="forza-card">
 
-        <div class="forza-icon">
+        {%- if section.settings.image_5 != blank -%}
+          <div
+            class="forza-card__media"
+            style="background-image: url({{ section.settings.image_5 | image_url: width: 900 }}); background-position: {{ section.settings.position_5 }};"
+          ></div>
+        {%- endif -%}
 
-          <svg viewBox="0 0 64 64" aria-hidden="true">
+        <div class="forza-card__veil"></div>
 
-            <rect
-              x="19"
-              y="10"
-              width="26"
-              height="44"
-              rx="4"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
+        <div class="forza-number">05</div>
 
-            <path
-              d="M27 48h10"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
+        <div class="forza-card__content">
 
-            <path
-              d="M32 18v10M27 23h10"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
+          <h3>{{ section.settings.title_5 }}</h3>
 
-          </svg>
+          <p>{{ section.settings.text_5 }}</p>
 
         </div>
-
-        <div class="forza-number">
-          05
-        </div>
-
-        <h3>
-          Conectividad y practicidad
-        </h3>
-
-        <p>
-          La FZ150 incorpora
-          <strong>porta celular y puerto USB</strong> para acompañarte
-          durante tus recorridos.
-        </p>
 
       </div>
 
@@ -337,83 +196,29 @@
 
       <div class="forza-card">
 
-        <div class="forza-icon">
+        {%- if section.settings.image_6 != blank -%}
+          <div
+            class="forza-card__media"
+            style="background-image: url({{ section.settings.image_6 | image_url: width: 900 }}); background-position: {{ section.settings.position_6 }};"
+          ></div>
+        {%- endif -%}
 
-          <svg viewBox="0 0 64 64" aria-hidden="true">
+        <div class="forza-card__veil"></div>
 
-            <path
-              d="M32 10l20 7v15c0 12-8 19-20 23C20 51 12 44 12 32V17z"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
+        <div class="forza-number">06</div>
 
-            <path
-              d="M22 32l7 7 14-15"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
+        <div class="forza-card__content">
 
-          </svg>
+          <h3>{{ section.settings.title_6 }}</h3>
+
+          <p>{{ section.settings.text_6 }}</p>
 
         </div>
-
-        <div class="forza-number">
-          06
-        </div>
-
-        <h3>
-          Frenado confiable
-        </h3>
-
-        <p>
-          Ambas opciones incorporan
-          <strong>freno de disco delantero y tambor trasero</strong>.
-        </p>
 
       </div>
 
     </div>
 
-
-    <!-- ======================================================
-         CTA / COLECCIÓN
-    ======================================================= -->
-
-    {% if section.settings.forza_collection != blank %}
-
-      <div class="forza-bottom">
-
-        <div class="forza-bottom-text">
-
-          <span>
-            {{ section.settings.bottom_kicker }}
-          </span>
-
-          <strong>
-            {{ section.settings.bottom_heading }}
-          </strong>
-
-        </div>
-
-
-        <a
-          href="{{ section.settings.forza_collection.url }}"
-          class="forza-button"
-        >
-
-          {{ section.settings.button_text }}
-
-          <span>
-            →
-          </span>
-
-        </a>
-
-      </div>
-
-    {% endif %}
 
   </div>
 
@@ -555,54 +360,78 @@
   =========================================================== */
 
   .forza-card {
-
-    background: #080808;
-
-    padding: 32px 28px;
-
-    min-height: 245px;
-
     position: relative;
-
-    transition:
-      background .25s ease,
-      transform .25s ease;
-
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background: #080808;
+    padding: 32px 28px;
+    min-height: 245px;
+    transition: transform .25s ease;
   }
-
 
   .forza-card:hover {
-
-    background: #111111;
-
     transform: translateY(-3px);
-
   }
 
-
-  /* ==========================================================
-     ICONOS
-  =========================================================== */
-
-  .forza-icon {
-
-    color: #E60000;
-
-    width: 45px;
-
-    height: 45px;
-
-    margin-bottom: 18px;
-
+  /* la foto */
+  .forza-card__media {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    transform: scale(1.03);
+    transition: transform .6s ease;
   }
 
+  .forza-card:hover .forza-card__media {
+    transform: scale(1.05);
+  }
 
-  .forza-icon svg {
+  /* el vidrio: desenfoque + degradado a negro */
+  .forza-card__veil {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, {{ veil }}) 0%,
+      rgba(0, 0, 0, {{ veil_mid }}) 38%,
+      rgba(0, 0, 0, {{ veil_top }}) 100%
+    );
+    -webkit-backdrop-filter: blur({{ section.settings.overlay_blur }}px) saturate(115%);
+    backdrop-filter: blur({{ section.settings.overlay_blur }}px) saturate(115%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .14),
+      inset 0 0 0 1px rgba(255, 255, 255, .05);
+    transition:
+      background .45s ease,
+      -webkit-backdrop-filter .45s ease,
+      backdrop-filter .45s ease;
+  }
 
-    width: 100%;
+  /* al pasar el cursor el vidrio se levanta: foto nitida y velo minimo */
+  .forza-card:hover .forza-card__veil {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, {{ veil_hover }}) 0%,
+      rgba(0, 0, 0, {{ veil_hover_mid }}) 45%,
+      rgba(0, 0, 0, {{ veil_hover_top }}) 100%
+    );
+    -webkit-backdrop-filter: blur(0) saturate(105%);
+    backdrop-filter: blur(0) saturate(105%);
+  }
 
-    height: 100%;
+  /* con el velo levantado el texto se apoya en su propia sombra */
+  .forza-card h3,
+  .forza-card p,
+  .forza-number {
+    text-shadow: 0 1px 10px rgba(0, 0, 0, .85);
+  }
 
+  .forza-card__content {
+    position: relative;
   }
 
 
@@ -620,7 +449,7 @@
 
     font-size: 12px;
 
-    color: #555555;
+    color: rgba(255, 255, 255, .6);
 
     font-weight: 800;
 
@@ -656,13 +485,15 @@
 
   .forza-card p {
 
-    color: #999999;
+    color: #d2d2d2;
 
     font-size: 14px;
 
     line-height: 1.6;
 
-    margin: 0;
+    margin: 0 auto;
+
+    max-width: 32ch;
 
   }
 
@@ -670,108 +501,6 @@
   .forza-card strong {
 
     color: #ffffff;
-
-  }
-
-
-  /* ==========================================================
-     CTA
-  =========================================================== */
-
-  .forza-bottom {
-
-    margin-top: 2px;
-
-    background: #E60000;
-
-    padding: 25px 30px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 25px;
-
-  }
-
-
-  .forza-bottom-text span {
-
-    display: block;
-
-    font-size: 11px;
-
-    font-weight: 800;
-
-    letter-spacing: 2px;
-
-    margin-bottom: 4px;
-
-    color: #ffffff;
-
-  }
-
-
-  .forza-bottom-text strong {
-
-    display: block;
-
-    font-size: 24px;
-
-    line-height: 1.2;
-
-    text-transform: uppercase;
-
-    color: #ffffff;
-
-  }
-
-
-  /* ==========================================================
-     BOTÓN
-  =========================================================== */
-
-  .forza-button {
-
-    background: #000000;
-
-    color: #ffffff !important;
-
-    padding: 14px 22px;
-
-    text-decoration: none !important;
-
-    font-size: 13px;
-
-    font-weight: 800;
-
-    letter-spacing: 1px;
-
-    white-space: nowrap;
-
-    transition:
-      background .2s ease,
-      color .2s ease;
-
-  }
-
-
-  .forza-button span {
-
-    margin-left: 8px;
-
-    font-size: 18px;
-
-  }
-
-
-  .forza-button:hover {
-
-    background: #ffffff;
-
-    color: #000000 !important;
 
   }
 
@@ -843,34 +572,6 @@
     }
 
 
-    .forza-bottom {
-
-      flex-direction: column;
-
-      align-items: flex-start;
-
-      padding: 24px;
-
-    }
-
-
-    .forza-bottom-text strong {
-
-      font-size: 20px;
-
-    }
-
-
-    .forza-button {
-
-      width: 100%;
-
-      text-align: center;
-
-      box-sizing: border-box;
-
-    }
-
   }
 
 </style>
@@ -908,31 +609,288 @@
     },
 
     {
-      "type": "collection",
-      "id": "forza_collection",
-      "label": "Colección de motos",
-      "info": "Selecciona la colección que abrirá el botón."
+      "type": "header",
+      "content": "Cuadro 01"
     },
 
     {
       "type": "text",
-      "id": "bottom_kicker",
-      "label": "Texto pequeño del CTA",
-      "default": "DOS ESTILOS · UNA FAMILIA"
+      "id": "title_1",
+      "label": "Título",
+      "default": "Motor Forza"
     },
 
     {
       "type": "text",
-      "id": "bottom_heading",
-      "label": "Título del CTA",
-      "default": "Elige la Forza que va contigo."
+      "id": "text_1",
+      "label": "Descripción",
+      "default": "12,000 km o 12 meses de garantía"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Imagen"
+    },
+
+    {
+      "type": "select",
+      "id": "position_1",
+      "label": "Encuadre de la imagen",
+      "options": [
+          { "value": "center center", "label": "Centro" },
+          { "value": "center top", "label": "Arriba" },
+          { "value": "center 35%", "label": "Centro alto" },
+          { "value": "center 65%", "label": "Centro bajo" },
+          { "value": "center bottom", "label": "Abajo" },
+          { "value": "left center", "label": "Izquierda" },
+          { "value": "right center", "label": "Derecha" }
+      ],
+      "default": "center center"
+    },
+
+    {
+      "type": "header",
+      "content": "Cuadro 02"
     },
 
     {
       "type": "text",
-      "id": "button_text",
-      "label": "Texto del botón",
-      "default": "VER MOTOS"
+      "id": "title_2",
+      "label": "Título",
+      "default": "Tablero Digital"
+    },
+
+    {
+      "type": "text",
+      "id": "text_2",
+      "label": "Descripción",
+      "default": "Tecnología avanzada de seguridad"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Imagen"
+    },
+
+    {
+      "type": "select",
+      "id": "position_2",
+      "label": "Encuadre de la imagen",
+      "options": [
+          { "value": "center center", "label": "Centro" },
+          { "value": "center top", "label": "Arriba" },
+          { "value": "center 35%", "label": "Centro alto" },
+          { "value": "center 65%", "label": "Centro bajo" },
+          { "value": "center bottom", "label": "Abajo" },
+          { "value": "left center", "label": "Izquierda" },
+          { "value": "right center", "label": "Derecha" }
+      ],
+      "default": "center center"
+    },
+
+    {
+      "type": "header",
+      "content": "Cuadro 03"
+    },
+
+    {
+      "type": "text",
+      "id": "title_3",
+      "label": "Título",
+      "default": "Foco con Luz Led"
+    },
+
+    {
+      "type": "text",
+      "id": "text_3",
+      "label": "Descripción",
+      "default": "Diseño y variedad de modelos"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Imagen"
+    },
+
+    {
+      "type": "select",
+      "id": "position_3",
+      "label": "Encuadre de la imagen",
+      "options": [
+          { "value": "center center", "label": "Centro" },
+          { "value": "center top", "label": "Arriba" },
+          { "value": "center 35%", "label": "Centro alto" },
+          { "value": "center 65%", "label": "Centro bajo" },
+          { "value": "center bottom", "label": "Abajo" },
+          { "value": "left center", "label": "Izquierda" },
+          { "value": "right center", "label": "Derecha" }
+      ],
+      "default": "center center"
+    },
+
+    {
+      "type": "header",
+      "content": "Cuadro 04"
+    },
+
+    {
+      "type": "text",
+      "id": "title_4",
+      "label": "Título",
+      "default": "Puerto USB"
+    },
+
+    {
+      "type": "text",
+      "id": "text_4",
+      "label": "Descripción",
+      "default": "Conectividad y practicidad"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "image_4",
+      "label": "Imagen"
+    },
+
+    {
+      "type": "select",
+      "id": "position_4",
+      "label": "Encuadre de la imagen",
+      "options": [
+          { "value": "center center", "label": "Centro" },
+          { "value": "center top", "label": "Arriba" },
+          { "value": "center 35%", "label": "Centro alto" },
+          { "value": "center 65%", "label": "Centro bajo" },
+          { "value": "center bottom", "label": "Abajo" },
+          { "value": "left center", "label": "Izquierda" },
+          { "value": "right center", "label": "Derecha" }
+      ],
+      "default": "center center"
+    },
+
+    {
+      "type": "header",
+      "content": "Cuadro 05"
+    },
+
+    {
+      "type": "text",
+      "id": "title_5",
+      "label": "Título",
+      "default": "Disco Delantero"
+    },
+
+    {
+      "type": "text",
+      "id": "text_5",
+      "label": "Descripción",
+      "default": "Frenado confiable"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "image_5",
+      "label": "Imagen"
+    },
+
+    {
+      "type": "select",
+      "id": "position_5",
+      "label": "Encuadre de la imagen",
+      "options": [
+          { "value": "center center", "label": "Centro" },
+          { "value": "center top", "label": "Arriba" },
+          { "value": "center 35%", "label": "Centro alto" },
+          { "value": "center 65%", "label": "Centro bajo" },
+          { "value": "center bottom", "label": "Abajo" },
+          { "value": "left center", "label": "Izquierda" },
+          { "value": "right center", "label": "Derecha" }
+      ],
+      "default": "center center"
+    },
+
+    {
+      "type": "header",
+      "content": "Cuadro 06"
+    },
+
+    {
+      "type": "text",
+      "id": "title_6",
+      "label": "Título",
+      "default": "Barras de Protección"
+    },
+
+    {
+      "type": "text",
+      "id": "text_6",
+      "label": "Descripción",
+      "default": "Pensadas para el día a día"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "image_6",
+      "label": "Imagen"
+    },
+
+    {
+      "type": "select",
+      "id": "position_6",
+      "label": "Encuadre de la imagen",
+      "options": [
+          { "value": "center center", "label": "Centro" },
+          { "value": "center top", "label": "Arriba" },
+          { "value": "center 35%", "label": "Centro alto" },
+          { "value": "center 65%", "label": "Centro bajo" },
+          { "value": "center bottom", "label": "Abajo" },
+          { "value": "left center", "label": "Izquierda" },
+          { "value": "right center", "label": "Derecha" }
+      ],
+      "default": "center center"
+    },
+
+    {
+      "type": "header",
+      "content": "Efecto vidrio"
+    },
+
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Oscurecer la imagen",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 90
+    },
+
+    {
+      "type": "range",
+      "id": "overlay_opacity_hover",
+      "label": "Oscurecer al pasar el cursor",
+      "info": "Cuánto queda del velo cuando se revela la foto.",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "default": 60,
+      "unit": "%"
+    },
+
+    {
+      "type": "range",
+      "id": "overlay_blur",
+      "label": "Desenfoque del vidrio",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "default": 3
     }
 
   ],
