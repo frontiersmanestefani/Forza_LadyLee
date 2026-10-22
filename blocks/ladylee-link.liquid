@@ -1,0 +1,300 @@
+{% comment %}
+  ============================================================
+  LADY LEE · ENLACE AL MISMO MODELO
+
+  Bloque para la ficha de producto. Lleva al usuario al producto
+  equivalente en ladylee.net, siguiendo el color que tenga
+  seleccionado.
+
+  El puente son los SKU: cada variante de Forza tiene un SKU que es
+  el mismo codigo con el que termina el handle del producto en Lady
+  Lee. La tabla se edita desde el editor de temas, sin tocar codigo.
+
+  Si un SKU no esta en la tabla, el boton lleva a la busqueda de Lady
+  Lee por ese SKU en vez de quedar roto.
+  ============================================================
+{% endcomment %}
+
+{% liquid
+  assign uid = block.id | replace: '_', '' | downcase
+  assign ll_product = closest.product | default: product
+
+  assign domain = block.settings.ladylee_domain | strip
+  assign ll_base = domain | append: '/products/' | replace: '//products/', '/products/'
+  assign ll_search = domain | append: '/search?type=product&q=' | replace: '//search?', '/search?'
+
+  assign rows = block.settings.sku_map | strip | newline_to_br
+  assign rows = rows | replace: '<br />', '|' | replace: '<br/>', '|' | replace: '<br>', '|'
+  assign pairs = rows | split: '|'
+  assign current_variant = ll_product.selected_or_first_available_variant
+  assign current_sku = current_variant.sku | strip
+%}
+
+{%- comment -%} URL inicial, segun la variante seleccionada al cargar {%- endcomment -%}
+{%- assign initial_url = '' -%}
+{%- for pair in pairs -%}
+  {%- assign kv = pair | strip | split: ':' -%}
+  {%- assign pair_sku = kv.first | strip -%}
+  {%- if pair_sku == current_sku and pair_sku != blank -%}
+    {%- assign pair_handle = kv.last | strip -%}
+    {%- assign initial_url = ll_base | append: pair_handle -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if initial_url == blank -%}
+  {%- assign sku_query = current_sku | url_encode -%}
+  {%- assign initial_url = ll_search | append: sku_query -%}
+{%- endif -%}
+
+{%- comment -%} Mapa variante -> URL, para seguir el color sin recargar {%- endcomment -%}
+{%- capture ladylee_links -%}
+  {
+  {%- for variant in ll_product.variants -%}
+    {%- assign variant_sku = variant.sku | strip -%}
+    {%- assign target = '' -%}
+    {%- for pair in pairs -%}
+      {%- assign kv = pair | strip | split: ':' -%}
+      {%- assign pair_sku = kv.first | strip -%}
+      {%- if pair_sku == variant_sku and pair_sku != blank -%}
+        {%- assign pair_handle = kv.last | strip -%}
+        {%- assign target = ll_base | append: pair_handle -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if target == blank -%}
+      {%- assign sku_query = variant_sku | url_encode -%}
+      {%- assign target = ll_search | append: sku_query -%}
+    {%- endif -%}
+    "{{ variant.id }}":"{{ target }}"{%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+  }
+{%- endcapture -%}
+
+<div
+  class="ladylee-link-block ladylee-link-{{ uid }}"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.heading != blank %}
+    <h3 class="ladylee-link-{{ uid }}__heading">{{ block.settings.heading }}</h3>
+  {% endif %}
+
+  {% if block.settings.text != blank %}
+    <p class="ladylee-link-{{ uid }}__text">{{ block.settings.text }}</p>
+  {% endif %}
+
+  <a
+    class="ladylee-link-{{ uid }}__button ladylee-link-block__button"
+    href="{{ initial_url }}"
+    {%- if block.settings.open_new_tab %} target="_blank" rel="noopener"{% endif -%}
+  >
+    {{ block.settings.button_label }}
+    <span aria-hidden="true">&rarr;</span>
+    {%- if block.settings.open_new_tab -%}
+      <span class="ladylee-link-block__sr">(se abre en una ventana nueva)</span>
+    {%- endif -%}
+  </a>
+
+  <script type="application/json" class="ladylee-link-block__map">{{ ladylee_links }}</script>
+</div>
+
+{% style %}
+  .ladylee-link-{{ uid }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .ladylee-link-{{ uid }}__heading {
+    margin: 0 0 8px;
+    color: {{ block.settings.text_color }};
+    font-family: var(--font-heading--family, sans-serif);
+    font-size: clamp(20px, 2.5vw, 28px);
+    line-height: 1.15;
+    text-transform: uppercase;
+  }
+
+  .ladylee-link-{{ uid }}__text {
+    margin: 0 0 18px;
+    color: {{ block.settings.text_color }};
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .ladylee-link-{{ uid }}__button {
+    display: inline-block;
+    padding: 15px 25px;
+    background: {{ block.settings.accent_color }};
+    border: 2px solid {{ block.settings.accent_color }};
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: background .2s ease, border-color .2s ease;
+  }
+
+  .ladylee-link-{{ uid }}__button span[aria-hidden] {
+    margin-left: 9px;
+  }
+
+  .ladylee-link-{{ uid }}__button:hover {
+    background: {{ block.settings.text_color }};
+    border-color: {{ block.settings.text_color }};
+  }
+
+  .ladylee-link-{{ uid }}__button:focus-visible {
+    outline: 3px solid {{ block.settings.text_color }};
+    outline-offset: 3px;
+  }
+
+  .ladylee-link-block__sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    var blocks = document.querySelectorAll('.ladylee-link-block');
+    if (!blocks.length) return;
+
+    var targets = [];
+
+    blocks.forEach(function (wrapper) {
+      if (wrapper.dataset.ladyleeReady) return;
+      wrapper.dataset.ladyleeReady = '1';
+
+      var anchor = wrapper.querySelector('.ladylee-link-block__button');
+      var mapTag = wrapper.querySelector('.ladylee-link-block__map');
+      if (!anchor || !mapTag) return;
+
+      try {
+        targets.push({ anchor: anchor, map: JSON.parse(mapTag.textContent) });
+      } catch (e) {
+        /* si el mapa no se puede leer, queda el enlace que armo Liquid */
+      }
+    });
+
+    if (!targets.length) return;
+
+    function sync() {
+      var id;
+      try {
+        id = new URL(window.location.href).searchParams.get('variant');
+      } catch (e) {
+        return;
+      }
+      if (!id) return;
+      targets.forEach(function (t) {
+        if (t.map[id]) t.anchor.href = t.map[id];
+      });
+    }
+
+    sync();
+    window.addEventListener('popstate', sync);
+    document.addEventListener('change', function () { setTimeout(sync, 60); });
+
+    // El tema cambia ?variant= con replaceState, sin recargar la pagina.
+    if (window.history && !window.__ladyleeHistoryHook) {
+      window.__ladyleeHistoryHook = true;
+      ['pushState', 'replaceState'].forEach(function (method) {
+        var original = history[method];
+        if (typeof original !== 'function') return;
+        history[method] = function () {
+          var result = original.apply(this, arguments);
+          setTimeout(sync, 0);
+          return result;
+        };
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Lady Lee - Enlace",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Fuerza sin límites"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Descripción",
+      "default": "Conoce la disponibilidad, el precio y las opciones de compra en Lady Lee."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón",
+      "default": "CONOCER MÁS INFORMACIÓN"
+    },
+    {
+      "type": "header",
+      "content": "Enlace a Lady Lee"
+    },
+    {
+      "type": "text",
+      "id": "ladylee_domain",
+      "label": "Dominio de Lady Lee",
+      "default": "https://ladylee.net"
+    },
+    {
+      "type": "textarea",
+      "id": "sku_map",
+      "label": "Tabla SKU → producto en Lady Lee",
+      "info": "Una línea por producto, con el formato SKU:handle. El handle es lo que va después de /products/ en la URL de Lady Lee. Si un SKU no está en la lista, el botón lleva a la búsqueda por ese SKU.",
+      "default": "1117351:forza-motocicleta-forza-fz150-negro-1117351\n1117352:forza-motocicleta-forza-fz150-rojo-1117352\n1117353:forza-motocicleta-forza-fz150-blanco-1117353\n1117586:forza-motocicleta-forza-fz150a-rojo-1117586\n1117587:forza-motocicleta-forza-fz150a-gris-1117587\n1117588:forza-motocicleta-forza-fz150a-negro-1117588\n1117589:forza-motocicleta-forza-fzx200-rojo-1117589\n1117590:forza-motocicleta-forza-fzx200-verde-1117590\n1117591:forza-motocicleta-forza-fzx200-blanco-1117591"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_new_tab",
+      "label": "Abrir en una pestaña nueva",
+      "default": true,
+      "info": "Recomendado: el enlace sale de esta tienda."
+    },
+    {
+      "type": "header",
+      "content": "Apariencia"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Color del botón",
+      "default": "#E60000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Ancho en escritorio",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lady Lee - Enlace"
+    }
+  ],
+  "tag": null,
+  "class": "ladylee-link-block-wrapper"
+}
+{% endschema %}
