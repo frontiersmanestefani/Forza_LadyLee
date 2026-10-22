@@ -105,11 +105,11 @@
         {%- if section.settings.step_1_button_label != blank and section.settings.step_1_button_link != blank -%}
           <a
             class="forza-step-button"
-            href="{{ section.settings.step_1_button_link }}"
-            {%- if section.settings.step_buttons_new_tab %} target="_blank" rel="noopener"{% endif -%}
+            href="{{ section.settings.step_1_button_link | escape }}"
+            {%- if section.settings.step_1_button_new_tab %} target="_blank" rel="noopener"{% endif -%}
           >
             {{ section.settings.step_1_button_label }}
-            {%- if section.settings.step_buttons_new_tab -%}
+            {%- if section.settings.step_1_button_new_tab -%}
               <span class="forza-visually-hidden">(se abre en una ventana nueva)</span>
             {%- endif -%}
           </a>
@@ -186,11 +186,11 @@
         {%- if section.settings.step_2_button_label != blank and section.settings.step_2_button_link != blank -%}
           <a
             class="forza-step-button"
-            href="{{ section.settings.step_2_button_link }}"
-            {%- if section.settings.step_buttons_new_tab %} target="_blank" rel="noopener"{% endif -%}
+            href="{{ section.settings.step_2_button_link | escape }}"
+            {%- if section.settings.step_2_button_new_tab %} target="_blank" rel="noopener"{% endif -%}
           >
             {{ section.settings.step_2_button_label }}
-            {%- if section.settings.step_buttons_new_tab -%}
+            {%- if section.settings.step_2_button_new_tab -%}
               <span class="forza-visually-hidden">(se abre en una ventana nueva)</span>
             {%- endif -%}
           </a>
@@ -258,11 +258,11 @@
         {%- if section.settings.step_3_button_label != blank and section.settings.step_3_button_link != blank -%}
           <a
             class="forza-step-button"
-            href="{{ section.settings.step_3_button_link }}"
-            {%- if section.settings.step_buttons_new_tab %} target="_blank" rel="noopener"{% endif -%}
+            href="{{ section.settings.step_3_button_link | escape }}"
+            {%- if section.settings.step_3_button_new_tab %} target="_blank" rel="noopener"{% endif -%}
           >
             {{ section.settings.step_3_button_label }}
-            {%- if section.settings.step_buttons_new_tab -%}
+            {%- if section.settings.step_3_button_new_tab -%}
               <span class="forza-visually-hidden">(se abre en una ventana nueva)</span>
             {%- endif -%}
           </a>
@@ -762,6 +762,14 @@
       "label": "Enlace del botón"
     },
 
+    {
+      "type": "checkbox",
+      "id": "step_1_button_new_tab",
+      "label": "Abrir en una pestaña nueva",
+      "default": false,
+      "info": "Activalo si el enlace sale de esta tienda."
+    },
+
 
     {
       "type": "header",
@@ -793,6 +801,14 @@
       "type": "url",
       "id": "step_2_button_link",
       "label": "Enlace del botón"
+    },
+
+    {
+      "type": "checkbox",
+      "id": "step_2_button_new_tab",
+      "label": "Abrir en una pestaña nueva",
+      "default": false,
+      "info": "Activalo si el enlace sale de esta tienda."
     },
 
 
@@ -828,18 +844,12 @@
       "label": "Enlace del botón"
     },
 
-
-    {
-      "type": "header",
-      "content": "Botones de los pasos"
-    },
-
     {
       "type": "checkbox",
-      "id": "step_buttons_new_tab",
-      "label": "Abrir los botones de los pasos en una pestaña nueva",
+      "id": "step_3_button_new_tab",
+      "label": "Abrir en una pestaña nueva",
       "default": false,
-      "info": "Activalo solo si el enlace sale de esta tienda."
+      "info": "Activalo si el enlace sale de esta tienda."
     }
 
   ],

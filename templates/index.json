@@ -325,10 +325,15 @@
       "settings": {
         "heading": "¿Qué diferencia nuestras motos?",
         "subheading": "Diseño, rendimiento y funcionalidad para acompañarte todos los días.",
-        "forza_collection": "motocicletas-2-ruedas",
-        "bottom_kicker": "VARIOS ESTILOS · UNA FAMILIA",
-        "bottom_heading": "Elige la Forza que va contigo.",
-        "button_text": "VER MOTOS"
+        "image_1": "shopify://shop_images/1500x1500_FORZA_MOTOS_WEBP-01.jpg",
+        "position_1": "center 35%",
+        "image_2": "shopify://shop_images/1500x1500_FORZA_MOTOS_WEBP-02.jpg",
+        "image_3": "shopify://shop_images/1500x1500_FORZA_MOTOS_WEBP-03.jpg",
+        "image_4": "shopify://shop_images/1500x1500_FORZA_MOTOS_WEBP-04.jpg",
+        "image_5": "shopify://shop_images/1500x1500_FORZA_MOTOS_WEBP-05.jpg",
+        "image_6": "shopify://shop_images/1500x1500_FORZA_MOTOS_WEBP-06.jpg",
+        "overlay_opacity": 90,
+        "overlay_blur": 3
       }
     },
     "tu_proxima_moto_Yinnhp": {
@@ -341,9 +346,12 @@
         "step_1_text": "Conoce las opciones Forza y encuentra la motocicleta que se adapta a tu forma de conducir.",
         "step_1_button_label": "VER MODELOS",
         "step_1_button_link": "/collections/motocicletas-2-ruedas",
-        "step_buttons_new_tab": false,
+        "step_1_button_new_tab": false,
         "step_2_title": "Elige cómo pagar",
         "step_2_text": "Compra con las opciones de pago y financiamiento disponibles.",
+        "step_2_button_label": "VER OPCIONES",
+        "step_2_button_link": "https://ladylee.net/collections/automotriz?filter.p.t.category=vp-2-2-3&sort_by=best-selling",
+        "step_2_button_new_tab": true,
         "step_3_title": "Hazla tuya",
         "step_3_text": "Completa tu compra y consulta las opciones de entrega o retiro disponibles."
       }
