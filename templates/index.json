@@ -334,7 +334,8 @@
         "image_6": "shopify://shop_images/1500x1500_FORZA_MOTOS_WEBP-06.jpg",
         "overlay_opacity": 90,
         "overlay_blur": 3
-      }
+      },
+      "disabled": true
     },
     "tu_proxima_moto_Yinnhp": {
       "type": "tu_proxima_moto",
@@ -354,7 +355,8 @@
         "step_2_button_new_tab": true,
         "step_3_title": "Hazla tuya",
         "step_3_text": "Completa tu compra y consulta las opciones de entrega o retiro disponibles."
-      }
+      },
+      "disabled": true
     },
     "collection_list_QzDJPx": {
       "type": "collection-list",
@@ -993,11 +995,167 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "forza_nuestras_motos": {
+      "type": "forza-nuestras-motos",
+      "settings": {
+        "background_image": "shopify://shop_images/forza-hero-motos.jpg",
+        "background_position": "center center",
+        "logo": "shopify://shop_images/forza-logo.png",
+        "logo_white": false,
+        "kicker": "La diferencia",
+        "title_top": "Nuestras",
+        "title_bottom": "Motos",
+        "subtitle": "Tu trabajo, tu camino, tu libertad.",
+        "button_label": "Conoce más",
+        "button_link": "shopify://collections/motocicletas-2-ruedas",
+        "card_1_title": "Motor Forza",
+        "card_1_text": "12,000 km o 12 meses de garantía.",
+        "card_2_title": "Tablero Digital",
+        "card_2_text": "Tecnología avanzada de seguridad.",
+        "card_3_title": "Foco con Luz Led",
+        "card_3_text": "Diseño y variedad de modelos.",
+        "card_4_title": "Puerto USB",
+        "card_4_text": "Conectividad y practicidad.",
+        "card_5_title": "Disco Delantero",
+        "card_5_text": "Frenado confiable.",
+        "card_6_title": "Barras de Protección",
+        "card_6_text": "Pensadas para el día a día.",
+        "accent_color": "#AF190F",
+        "overlay_opacity": 91,
+        "card_opacity": 97,
+        "padding_top": 40,
+        "padding_bottom": 48
+      }
+    },
+    "forza_modelos": {
+      "type": "forza-modelos",
+      "blocks": {
+        "modelo_fz150": {
+          "type": "modelo",
+          "settings": {
+            "image": "shopify://shop_images/forza-modelo-fz150.jpg",
+            "title": "FZ150",
+            "tagline": "Trabajo Diario",
+            "button_label": "Ver detalles",
+            "link": "shopify://collections/motocicletas-2-ruedas",
+            "new_tab": false
+          }
+        },
+        "modelo_fz150a": {
+          "type": "modelo",
+          "settings": {
+            "image": "shopify://shop_images/forza-modelo-fz150a.jpg",
+            "title": "FZ150A",
+            "tagline": "Turismo y Ciudad",
+            "button_label": "Ver detalles",
+            "link": "shopify://collections/motocicletas-2-ruedas",
+            "new_tab": false
+          }
+        },
+        "modelo_fzx200": {
+          "type": "modelo",
+          "settings": {
+            "image": "shopify://shop_images/forza-modelo-fzx200.png",
+            "title": "FZX200",
+            "tagline": "Todo Terreno",
+            "button_label": "Ver detalles",
+            "link": "shopify://collections/motocicletas-2-ruedas",
+            "new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "modelo_fz150",
+        "modelo_fz150a",
+        "modelo_fzx200"
+      ],
+      "settings": {
+        "logo": "shopify://shop_images/forza-logo.png",
+        "title_top": "Tu próxima moto",
+        "title_bottom": "Está en Lady Lee",
+        "subtitle": "Encuentra el modelo ideal para ti y recorre nuevos caminos.",
+        "columns": 3,
+        "background_color": "#ffffff",
+        "heading_color": "#111111",
+        "text_color": "#2b2b2b",
+        "accent_color": "#AF190F",
+        "corner_red": "#BF4941",
+        "corner_gray": "#C5C1C7",
+        "corner_scale": 100,
+        "padding_top": 56,
+        "padding_bottom": 64
+      }
+    },
+    "forza_productos": {
+      "type": "forza-productos",
+      "blocks": {
+        "carta_motos": {
+          "type": "carta",
+          "settings": {
+            "image": "shopify://shop_images/forza-bento-motos.jpg",
+            "title": "Motos Forza",
+            "text": "Tu trabajo, tu camino, tu libertad.",
+            "large": true,
+            "button_label": "Conoce más",
+            "link": "shopify://collections/motocicletas-2-ruedas",
+            "new_tab": false
+          }
+        },
+        "carta_accesorios": {
+          "type": "carta",
+          "settings": {
+            "image": "shopify://shop_images/forza-bento-accesorios.jpg",
+            "title": "Accesorios Forza",
+            "text": "Dale personalidad a tu moto.",
+            "large": false,
+            "button_label": "Conoce más",
+            "link": "/collections/all",
+            "new_tab": false
+          }
+        },
+        "carta_bicicletas": {
+          "type": "carta",
+          "settings": {
+            "image": "shopify://shop_images/forza-bento-bicicletas.jpg",
+            "title": "Bicicletas Forza",
+            "text": "Tu trabajo, tu camino, tu libertad.",
+            "large": false,
+            "button_label": "Conoce más",
+            "link": "/collections/all",
+            "new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "carta_motos",
+        "carta_accesorios",
+        "carta_bicicletas"
+      ],
+      "settings": {
+        "logo": "shopify://shop_images/forza-logo.png",
+        "logo_white": false,
+        "side_image": "shopify://shop_images/forza-moto-lateral.png",
+        "side_height": 70,
+        "side_shift": 47,
+        "kicker": "Conoce nuestros",
+        "title_bottom": "Productos",
+        "subtitle": "Más que una motocicleta, una compañera en tu camino.",
+        "gradient_from": "#f8f8f8",
+        "gradient_to": "#0b0b0b",
+        "accent_color": "#AF190F",
+        "card_overlay": 20,
+        "padding_top": 44,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
     "hero_RkimKJ",
     "slideshow_JwR4gm",
+    "forza_nuestras_motos",
+    "forza_modelos",
+    "forza_productos",
     "section_PYfQLp",
     "custom_liquid_GqzBtM",
     "forza_diferenciales_6MfJzT",

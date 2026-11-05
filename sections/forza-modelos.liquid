@@ -1,0 +1,486 @@
+{% comment %}
+  ============================================================
+  FORZA · MODELOS (Tu proxima moto esta en Lady Lee)
+  Pagina 2 del diseno 2026, copiada tal cual.
+
+  Las seis figuras de las esquinas salieron medidas del PDF, en
+  porcentaje de una pagina de 1760x1174, y estan puestas en px
+  para que el angulo de las diagonales no se deforme. El control
+  "Tamano de las figuras" las agranda o achica todas juntas.
+
+  Colores del PDF: rojo #AF190F, rojo de esquina #BF4941,
+  gris #C5C1C7.
+  ============================================================
+{% endcomment %}
+
+{% liquid
+  assign uid = section.id | replace: '_', '' | downcase
+  assign e = section.settings.corner_scale | times: 0.01
+%}
+
+<section class="fmo fmo-{{ uid }}">
+
+  <span class="fmo-{{ uid }}__fig fmo-{{ uid }}__fig--ri" aria-hidden="true"></span>
+  <span class="fmo-{{ uid }}__fig fmo-{{ uid }}__fig--li" aria-hidden="true"></span>
+  <span class="fmo-{{ uid }}__fig fmo-{{ uid }}__fig--gd" aria-hidden="true"></span>
+  <span class="fmo-{{ uid }}__fig fmo-{{ uid }}__fig--gi" aria-hidden="true"></span>
+  <span class="fmo-{{ uid }}__fig fmo-{{ uid }}__fig--gb" aria-hidden="true"></span>
+  <span class="fmo-{{ uid }}__fig fmo-{{ uid }}__fig--rb" aria-hidden="true"></span>
+
+  <div class="fmo-{{ uid }}__contenido">
+
+    {% if section.settings.logo != blank %}
+      <img
+        class="fmo-{{ uid }}__logo"
+        src="{{ section.settings.logo | image_url: width: 700 }}"
+        alt="{{ shop.name | escape }}"
+        width="{{ section.settings.logo.width }}"
+        height="{{ section.settings.logo.height }}"
+        loading="lazy"
+      >
+    {% endif %}
+
+    {% if section.settings.title_top != blank or section.settings.title_bottom != blank %}
+      <h2 class="fmo-{{ uid }}__titulo">
+        {% if section.settings.title_top != blank %}
+          <span class="fmo-{{ uid }}__titulo-a">{{ section.settings.title_top }}</span>
+        {% endif %}
+        {% if section.settings.title_bottom != blank %}
+          <span class="fmo-{{ uid }}__titulo-b">{{ section.settings.title_bottom }}</span>
+        {% endif %}
+      </h2>
+    {% endif %}
+
+    {% if section.settings.subtitle != blank %}
+      <p class="fmo-{{ uid }}__bajada">{{ section.settings.subtitle }}</p>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="fmo-{{ uid }}__grilla">
+        {% for block in section.blocks %}
+          <article class="fmo-{{ uid }}__modelo" {{ block.shopify_attributes }}>
+
+            {% if block.settings.image != blank %}
+              <div class="fmo-{{ uid }}__foto">
+                <img
+                  src="{{ block.settings.image | image_url: width: 1000 }}"
+                  alt="{{ block.settings.title | escape }}"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                  loading="lazy"
+                >
+              </div>
+            {% endif %}
+
+            {% if block.settings.title != blank %}
+              <h3 class="fmo-{{ uid }}__nombre">{{ block.settings.title }}</h3>
+            {% endif %}
+
+            {% if block.settings.tagline != blank %}
+              <p class="fmo-{{ uid }}__uso">{{ block.settings.tagline }}</p>
+            {% endif %}
+
+            {% if block.settings.button_label != blank and block.settings.link != blank %}
+              <a
+                class="fmo-{{ uid }}__boton"
+                href="{{ block.settings.link | escape }}"
+                {% if block.settings.new_tab %}
+                  target="_blank"
+                  rel="noopener"
+                {% endif %}
+              >
+                {{ block.settings.button_label }}
+                {% if block.settings.new_tab %}
+                  <span class="fmo__oculto">(se abre en una ventana nueva)</span>
+                {% endif %}
+              </a>
+            {% endif %}
+
+          </article>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+  </div>
+
+</section>
+
+{% style %}
+  .fmo-{{ uid }} {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 20px {{ section.settings.padding_bottom }}px;
+  }
+
+  /* ---- las seis figuras de las esquinas ---- */
+
+  .fmo-{{ uid }}__fig {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  /* triangulo rojo, arriba a la izquierda */
+  .fmo-{{ uid }}__fig--ri {
+    top: 0;
+    left: 0;
+    width: calc(252px * {{ e }});
+    height: calc(240px * {{ e }});
+    background: {{ section.settings.corner_red }};
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
+
+  /* linea roja delgada, paralela al triangulo */
+  .fmo-{{ uid }}__fig--li {
+    top: 0;
+    left: 0;
+    width: calc(277px * {{ e }});
+    height: calc(262px * {{ e }});
+    background: {{ section.settings.corner_red }};
+    clip-path: polygon(100% 0, 100% 3.4%, 0 100%, 0 96.6%);
+  }
+
+  /* cuna gris, arriba a la derecha */
+  .fmo-{{ uid }}__fig--gd {
+    top: 0;
+    right: 0;
+    width: calc(167px * {{ e }});
+    height: calc(259px * {{ e }});
+    background: {{ section.settings.corner_gray }};
+    clip-path: polygon(100% 0, 100% 78%, 65% 100%, 0 78%);
+  }
+
+  /* triangulo gris, abajo a la izquierda */
+  .fmo-{{ uid }}__fig--gi {
+    bottom: 0;
+    left: 0;
+    width: calc(111px * {{ e }});
+    height: calc(107px * {{ e }});
+    background: {{ section.settings.corner_gray }};
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
+
+  /* banda gris, abajo a la derecha */
+  .fmo-{{ uid }}__fig--gb {
+    right: 0;
+    bottom: 0;
+    width: calc(226px * {{ e }});
+    height: calc(216px * {{ e }});
+    background: {{ section.settings.corner_gray }};
+    clip-path: polygon(0 100%, 100% 0, 100% 24%, 24% 100%);
+  }
+
+  /* triangulo rojo, abajo a la derecha */
+  .fmo-{{ uid }}__fig--rb {
+    right: 0;
+    bottom: 0;
+    width: calc(170px * {{ e }});
+    height: calc(163px * {{ e }});
+    background: {{ section.settings.corner_red }};
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  }
+
+  .fmo-{{ uid }}__contenido {
+    position: relative;
+    max-width: 1240px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .fmo-{{ uid }}__logo {
+    display: block;
+    width: clamp(170px, 19vw, 275px);
+    height: auto;
+    margin: 0 auto 6px;
+  }
+
+  .fmo-{{ uid }}__titulo {
+    margin: 0 0 clamp(14px, 2vw, 26px);
+    font-family: var(--font-heading--family, sans-serif);
+    font-style: italic;
+    font-weight: 900;
+    line-height: .96;
+    text-transform: uppercase;
+  }
+
+  .fmo-{{ uid }}__titulo span {
+    display: block;
+  }
+
+  .fmo-{{ uid }}__titulo-a {
+    color: {{ section.settings.heading_color }};
+    font-size: clamp(34px, 6.1vw, 88px);
+  }
+
+  /* en el PDF la segunda linea es mas chica que la primera */
+  .fmo-{{ uid }}__titulo-b {
+    color: {{ section.settings.accent_color }};
+    font-size: clamp(25px, 4.4vw, 64px);
+  }
+
+  .fmo-{{ uid }}__bajada {
+    max-width: 760px;
+    margin: 0 auto clamp(26px, 4vw, 52px);
+    color: {{ section.settings.text_color }};
+    font-size: clamp(15px, 1.95vw, 28px);
+    font-style: italic;
+  }
+
+  /* ---- tarjetas de modelo ---- */
+
+  .fmo-{{ uid }}__grilla {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
+    gap: clamp(18px, 2.6vw, 38px);
+    align-items: start;
+  }
+
+  .fmo-{{ uid }}__modelo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .fmo-{{ uid }}__foto {
+    width: 100%;
+    margin-bottom: clamp(10px, 1.4vw, 18px);
+  }
+
+  .fmo-{{ uid }}__foto img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+  }
+
+  .fmo-{{ uid }}__nombre {
+    margin: 0 0 2px;
+    color: {{ section.settings.heading_color }};
+    font-family: var(--font-heading--family, sans-serif);
+    font-size: clamp(26px, 3.3vw, 47px);
+    font-style: italic;
+    font-weight: 900;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  .fmo-{{ uid }}__uso {
+    margin: 0 0 clamp(14px, 1.8vw, 24px);
+    color: {{ section.settings.text_color }};
+    font-size: clamp(14px, 1.7vw, 25px);
+    font-style: italic;
+  }
+
+  .fmo-{{ uid }}__boton {
+    display: inline-block;
+    margin-top: auto;
+    padding: clamp(10px, 1.2vw, 15px) clamp(22px, 2.8vw, 40px);
+    border: 1.5px solid {{ section.settings.heading_color }};
+    border-radius: 999px;
+    color: {{ section.settings.heading_color }} !important;
+    text-decoration: none !important;
+    font-size: clamp(12px, 1.4vw, 21px);
+    font-weight: 400;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
+  }
+
+  .fmo-{{ uid }}__boton:hover {
+    background: {{ section.settings.accent_color }};
+    border-color: {{ section.settings.accent_color }};
+    color: #ffffff !important;
+  }
+
+  .fmo-{{ uid }}__boton:focus-visible {
+    outline: 3px solid {{ section.settings.accent_color }};
+    outline-offset: 3px;
+  }
+
+  .fmo__oculto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media screen and (max-width: 990px) {
+    .fmo-{{ uid }}__grilla {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .fmo-{{ uid }} {
+      padding-inline: 16px;
+    }
+
+    .fmo-{{ uid }}__fig {
+      transform: scale(.5);
+    }
+
+    .fmo-{{ uid }}__fig--ri,
+    .fmo-{{ uid }}__fig--li {
+      transform-origin: top left;
+    }
+
+    .fmo-{{ uid }}__fig--gd {
+      transform-origin: top right;
+    }
+
+    .fmo-{{ uid }}__fig--gi {
+      transform-origin: bottom left;
+    }
+
+    .fmo-{{ uid }}__fig--gb,
+    .fmo-{{ uid }}__fig--rb {
+      transform-origin: bottom right;
+    }
+
+    .fmo-{{ uid }}__grilla {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Forza · Modelos",
+  "tag": "section",
+  "class": "section-forza-modelos",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Título, primera línea",
+      "default": "Tu próxima moto"
+    },
+    {
+      "type": "text",
+      "id": "title_bottom",
+      "label": "Título, segunda línea",
+      "info": "Se muestra en rojo y un poco más chica, como en el diseño.",
+      "default": "Está en Lady Lee"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Bajada",
+      "default": "Encuentra el modelo ideal para ti y recorre nuevos caminos."
+    },
+    { "type": "header", "content": "Apariencia" },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columnas en computadora",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Fondo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color de los títulos",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#2b2b2b"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Rojo Forza",
+      "default": "#AF190F"
+    },
+    {
+      "type": "color",
+      "id": "corner_red",
+      "label": "Rojo de las esquinas",
+      "default": "#BF4941"
+    },
+    {
+      "type": "color",
+      "id": "corner_gray",
+      "label": "Gris de las esquinas",
+      "default": "#C5C1C7"
+    },
+    {
+      "type": "range",
+      "id": "corner_scale",
+      "label": "Tamaño de las figuras",
+      "min": 0,
+      "max": 180,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacio arriba",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio abajo",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "modelo",
+      "name": "Modelo",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Foto de la moto" },
+        { "type": "text", "id": "title", "label": "Nombre del modelo", "default": "FZ150" },
+        { "type": "text", "id": "tagline", "label": "Para qué sirve", "default": "Trabajo Diario" },
+        { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Ver detalles" },
+        { "type": "url", "id": "link", "label": "Enlace del botón" },
+        { "type": "checkbox", "id": "new_tab", "label": "Abrir en una ventana nueva", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Forza · Modelos",
+      "blocks": [
+        { "type": "modelo", "settings": { "title": "FZ150", "tagline": "Trabajo Diario", "button_label": "Ver detalles" } },
+        { "type": "modelo", "settings": { "title": "FZ150A", "tagline": "Turismo y Ciudad", "button_label": "Ver detalles" } },
+        { "type": "modelo", "settings": { "title": "FZX200", "tagline": "Todo Terreno", "button_label": "Ver detalles" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
