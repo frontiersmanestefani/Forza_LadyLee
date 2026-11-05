@@ -23,6 +23,10 @@
   assign v4 = v | times: 0.29
   assign v5 = v | times: 0.15
   assign v6 = v | times: 0.03
+  assign tw = section.settings.text_width
+  assign tw_resto = 100 | minus: tw
+  assign fade_ini = tw | times: 0.68 | round
+  assign fade_fin = tw | plus: 3
 %}
 
 <section class="fnm fnm-{{ uid }}">
@@ -256,82 +260,108 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: clamp(14px, 1.7vw, 24px);
+    /* no se estira a lo ancho de la pantalla, y va centrado */
+    max-width: {{ section.settings.cards_width }}px;
+    margin-inline: auto;
   }
 
   .fnm-{{ uid }}__cuadro {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    /* mitad izquierda con el contenido, mitad derecha vacia */
+    /* izquierda el contenido, derecha la foto */
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: clamp(150px, 15vw, 182px);
+    grid-template-columns: {{ tw }}% {{ tw_resto }}%;
+    min-height: clamp(132px, 11vw, 172px);
     border-radius: clamp(16px, 1.8vw, 24px);
-    background: rgba(28, 25, 29, {{ section.settings.card_opacity | times: 0.01 }});
+    background-color: #1c191d;
+    background-image: var(--fnm-cuadro-foto, none);
+    /* por el alto en vez de recortar: la foto se ve un poco mas lejos
+       y entera de arriba a abajo. El sobrante queda a la izquierda,
+       debajo del negro. */
+    background-size: auto {{ section.settings.photo_zoom }}%;
+    background-position: right center;
+    background-repeat: no-repeat;
     box-shadow: 0 16px 34px rgba(0, 0, 0, .42);
   }
 
-  /* foto opcional de fondo del cuadro */
+  /* difuminado negro desde la izquierda: tapa el lado del texto y
+     se apaga justo en la linea roja, dejando la foto limpia */
   .fnm-{{ uid }}__cuadro::before {
     content: "";
     position: absolute;
     inset: 0;
-    z-index: -1;
-    background-image: var(--fnm-cuadro-foto, none);
-    background-size: cover;
-    background-position: center;
-    opacity: .5;
+    z-index: 0;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, {{ section.settings.card_opacity | times: 0.01 }}) 0%,
+      rgba(0, 0, 0, {{ section.settings.card_opacity | times: 0.01 }}) {{ fade_ini }}%,
+      rgba(0, 0, 0, 0) {{ fade_fin }}%
+    );
   }
 
-  /* la linea roja: al centro exacto y de alto completo */
+  {%- if section.settings.show_divider -%}
+  /* la linea roja al centro, de alto completo */
   .fnm-{{ uid }}__cuadro::after {
     content: "";
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 50%;
+    left: {{ tw }}%;
+    z-index: 2;
     width: 3px;
     transform: translateX(-50%);
     background: {{ section.settings.accent_color }};
   }
+  {%- endif -%}
 
   .fnm-{{ uid }}__cuadro-cuerpo {
+    position: relative;
+    z-index: 2;
     grid-column: 1;
     display: flex;
     flex-direction: column;
-    /* repartido como en el PDF: el titulo arriba, la viñeta abajo */
-    justify-content: space-evenly;
-    gap: 10px;
-    padding: clamp(16px, 1.6vw, 26px) clamp(12px, 1.1vw, 18px);
+    /* el texto agrupado al centro, cerca del titulo */
+    justify-content: center;
+    gap: clamp(10px, 1vw, 15px);
+    padding: clamp(16px, 1.6vw, 26px) clamp(10px, .95vw, 15px);
   }
 
   .fnm-{{ uid }}__cuadro-titulo {
     margin: 0;
     color: #ffffff;
     font-family: var(--font-heading--family, sans-serif);
-    font-size: clamp(16px, 1.5vw, 21px);
-    line-height: 1.25;
-    text-align: center;
+    font-size: clamp(17px, 1.62vw, 23px);
+    line-height: 1.22;
+    /* pegado a la izquierda, alineado con la viñeta de abajo */
+    text-align: left;
     text-transform: uppercase;
+    /* por si la foto de atras es clara */
+    text-shadow: 0 2px 10px rgba(0, 0, 0, .75);
   }
 
+  /* viñeta propia: el punto queda alineado con el título y las
+     líneas siguientes caen debajo del texto, no debajo del punto */
   .fnm-{{ uid }}__cuadro-lista {
     margin: 0;
-    padding-inline-start: 17px;
+    padding-inline-start: 0;
+    list-style: none;
   }
 
   .fnm-{{ uid }}__cuadro-lista li {
+    position: relative;
+    padding-inline-start: 14px;
     color: #e3e3e3;
     font-size: clamp(13px, 1.05vw, 15px);
     line-height: 1.45;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, .75);
   }
 
-  /* en computadora el cuadro guarda la proporcion del PDF (1.82:1),
-     asi crece de alto cuando crece de ancho y no se achata */
-  @media screen and (min-width: 991px) {
-    .fnm-{{ uid }}__cuadro {
-      aspect-ratio: 1.82;
-    }
+  .fnm-{{ uid }}__cuadro-lista li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: 0;
   }
 
   @media screen and (max-width: 990px) {
@@ -497,13 +527,53 @@
     },
     {
       "type": "range",
+      "id": "cards_width",
+      "label": "Ancho de la fila de cuadros",
+      "info": "Quedan pegados a la izquierda; esto define hasta dónde llegan.",
+      "min": 700,
+      "max": 1900,
+      "step": 20,
+      "unit": "px",
+      "default": 1180
+    },
+    {
+      "type": "range",
+      "id": "text_width",
+      "label": "Ancho del área de texto",
+      "info": "Más ancho deja los títulos en una línea; menos deja ver más foto.",
+      "min": 40,
+      "max": 75,
+      "step": 1,
+      "unit": "%",
+      "default": 63
+    },
+    {
+      "type": "range",
+      "id": "photo_zoom",
+      "label": "Acercamiento de la foto",
+      "info": "100% la muestra entera de arriba a abajo. Más alto la acerca.",
+      "min": 100,
+      "max": 170,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Línea roja al centro del cuadro",
+      "default": false
+    },
+    {
+      "type": "range",
       "id": "card_opacity",
-      "label": "Opacidad de los cuadros",
-      "min": 50,
+      "label": "Negro detrás del texto",
+      "info": "El degradado arranca con este valor y se apaga en la línea roja.",
+      "min": 40,
       "max": 100,
       "step": 1,
       "unit": "%",
-      "default": 97
+      "default": 92
     },
     {
       "type": "range",
