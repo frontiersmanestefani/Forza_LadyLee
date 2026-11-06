@@ -233,7 +233,13 @@
     });
   })();
 </script>
-
+{% style %}
+  /* Forza es tienda de consulta: sin carrito ni cuentas */
+  .header-actions__cart-icon,
+  .account-button {
+    display: none !important;
+  }
+{% endstyle %}
 {% schema %}
 {
   "name": "Buscador con categorías",

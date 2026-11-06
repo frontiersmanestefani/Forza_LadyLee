@@ -1,0 +1,603 @@
+{% comment %}
+  ============================================================
+  FORZA · NUESTRAS MOTOS
+  Pagina 1 del diseno 2026, copiada tal cual.
+
+  Medidas sacadas del PDF:
+    - el fondo va de negro (#17171B) a la izquierda a blanco a la
+      derecha; eso se logra con la foto sobre blanco y un velo
+      oscuro que se apaga al 74% del ancho
+    - rojo Forza #AF190F
+    - cuadros #1C191D, partidos a la mitad por una linea roja de
+      alto completo; el contenido va en la mitad izquierda y la
+      derecha queda vacia, como en el diseno
+  ============================================================
+{% endcomment %}
+
+{% liquid
+  assign uid = section.id | replace: '_', '' | downcase
+  assign v = section.settings.overlay_opacity | times: 0.01
+  assign v1 = v | times: 0.81
+  assign v2 = v | times: 0.63
+  assign v3 = v | times: 0.45
+  assign v4 = v | times: 0.29
+  assign v5 = v | times: 0.15
+  assign v6 = v | times: 0.03
+  assign tw = section.settings.text_width
+  assign tw_resto = 100 | minus: tw
+  assign fade_ini = tw | times: 0.68 | round
+  assign fade_fin = tw | plus: 3
+%}
+
+<section class="fnm fnm-{{ uid }}">
+
+  {% if section.settings.background_image != blank %}
+    <div
+      class="fnm-{{ uid }}__foto"
+      style="background-image: url({{ section.settings.background_image | image_url: width: 2200 }});"
+    ></div>
+  {% endif %}
+
+  <div class="fnm-{{ uid }}__velo"></div>
+
+  <div class="fnm-{{ uid }}__contenido">
+
+    {% if section.settings.logo != blank %}
+      <img
+        class="fnm-{{ uid }}__logo{% if section.settings.logo_white %} fnm-{{ uid }}__logo--blanco{% endif %}"
+        src="{{ section.settings.logo | image_url: width: 700 }}"
+        alt="{{ shop.name | escape }}"
+        width="{{ section.settings.logo.width }}"
+        height="{{ section.settings.logo.height }}"
+        loading="lazy"
+      >
+    {% endif %}
+
+    <div class="fnm-{{ uid }}__encabezado">
+
+      {% if section.settings.kicker != blank %}
+        <p class="fnm-{{ uid }}__kicker">
+          <span>{{ section.settings.kicker }}</span>
+          <i aria-hidden="true"></i>
+        </p>
+      {% endif %}
+
+      {% if section.settings.title_top != blank or section.settings.title_bottom != blank %}
+        <h2 class="fnm-{{ uid }}__titulo">
+          {% if section.settings.title_top != blank %}
+            <span class="fnm-{{ uid }}__titulo-a">{{ section.settings.title_top }}</span>
+          {% endif %}
+          {% if section.settings.title_bottom != blank %}
+            <span class="fnm-{{ uid }}__titulo-b">{{ section.settings.title_bottom }}</span>
+          {% endif %}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.subtitle != blank %}
+        <p class="fnm-{{ uid }}__bajada">{{ section.settings.subtitle }}</p>
+      {% endif %}
+
+      {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+        <a class="fnm-{{ uid }}__boton" href="{{ section.settings.button_link | escape }}">
+          {{ section.settings.button_label }}
+        </a>
+      {% endif %}
+
+    </div>
+
+    <div class="fnm-{{ uid }}__grilla">
+      {% for i in (1..6) %}
+        {%- liquid
+          assign k_titulo = 'card_' | append: i | append: '_title'
+          assign k_texto = 'card_' | append: i | append: '_text'
+          assign k_foto = 'card_' | append: i | append: '_image'
+          assign titulo = section.settings[k_titulo]
+          assign texto = section.settings[k_texto]
+          assign foto = section.settings[k_foto]
+        -%}
+        {% if titulo != blank or texto != blank %}
+          <article
+            class="fnm-{{ uid }}__cuadro"
+            {% if foto != blank %}
+              style="--fnm-cuadro-foto: url({{ foto | image_url: width: 900 }});"
+            {% endif %}
+          >
+            <div class="fnm-{{ uid }}__cuadro-cuerpo">
+              {% if titulo != blank %}
+                <h3 class="fnm-{{ uid }}__cuadro-titulo">{{ titulo }}</h3>
+              {% endif %}
+              {% if texto != blank %}
+                <ul class="fnm-{{ uid }}__cuadro-lista"><li>{{ texto }}</li></ul>
+              {% endif %}
+            </div>
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  </div>
+
+</section>
+
+{% style %}
+  .fnm-{{ uid }} {
+    /* el ancho del PDF: en pantallas grandes el contenido no se
+       encierra en una columna angosta al centro */
+    --fnm-tope: 1920px;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    /* el blanco de abajo es el que, junto al velo, da el degradado del PDF */
+    background: #ffffff;
+    padding: {{ section.settings.padding_top }}px clamp(16px, 5vw, 90px) {{ section.settings.padding_bottom }}px;
+  }
+
+  .fnm-{{ uid }}__foto {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: {{ section.settings.background_position }};
+  }
+
+  .fnm-{{ uid }}__velo {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, {{ v }}) 0%,
+      rgba(0, 0, 0, {{ v1 }}) 11%,
+      rgba(0, 0, 0, {{ v2 }}) 22%,
+      rgba(0, 0, 0, {{ v3 }}) 33%,
+      rgba(0, 0, 0, {{ v4 }}) 44%,
+      rgba(0, 0, 0, {{ v5 }}) 55%,
+      rgba(0, 0, 0, {{ v6 }}) 66%,
+      rgba(0, 0, 0, 0) 74%
+    );
+  }
+
+  .fnm-{{ uid }}__contenido {
+    position: relative;
+    max-width: var(--fnm-tope);
+    margin: 0 auto;
+  }
+
+  .fnm-{{ uid }}__logo {
+    display: block;
+    width: clamp(170px, 20vw, 290px);
+    height: auto;
+    margin-inline-start: auto;
+    margin-bottom: 4px;
+  }
+
+  .fnm-{{ uid }}__logo--blanco {
+    filter: brightness(0) invert(1);
+  }
+
+  .fnm-{{ uid }}__encabezado {
+    max-width: 620px;
+    margin-bottom: clamp(30px, 5vw, 58px);
+  }
+
+  .fnm-{{ uid }}__kicker {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 0 0 4px;
+    color: #a7a7a9;
+    font-size: clamp(15px, 1.9vw, 27px);
+    font-weight: 400;
+    letter-spacing: .34em;
+    text-transform: uppercase;
+  }
+
+  .fnm-{{ uid }}__kicker i {
+    display: block;
+    flex: 0 0 auto;
+    width: clamp(48px, 6vw, 92px);
+    height: 4px;
+    background: {{ section.settings.accent_color }};
+  }
+
+  .fnm-{{ uid }}__titulo {
+    margin: 0 0 10px;
+    font-family: var(--font-heading--family, sans-serif);
+    font-size: clamp(50px, 7.4vw, 100px);
+    font-style: italic;
+    font-weight: 900;
+    line-height: .82;
+    letter-spacing: -.01em;
+    text-transform: uppercase;
+  }
+
+  .fnm-{{ uid }}__titulo span {
+    display: block;
+    /* sombra dura, sin desenfoque, como en el diseno */
+    text-shadow: .07em .07em 0 rgba(52, 52, 56, .78);
+  }
+
+  .fnm-{{ uid }}__titulo-a {
+    color: #ffffff;
+  }
+
+  .fnm-{{ uid }}__titulo-b {
+    color: {{ section.settings.accent_color }};
+  }
+
+  .fnm-{{ uid }}__bajada {
+    margin: 0 0 clamp(18px, 2.4vw, 30px);
+    color: #f2f2f2;
+    font-size: clamp(18px, 2.4vw, 34px);
+    font-weight: 300;
+  }
+
+  .fnm-{{ uid }}__boton {
+    display: inline-block;
+    padding: clamp(13px, 1.6vw, 19px) clamp(34px, 4.4vw, 62px);
+    border-radius: 999px;
+    background: {{ section.settings.accent_color }};
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-size: clamp(14px, 1.6vw, 23px);
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    transition: transform .2s ease, filter .2s ease;
+  }
+
+  .fnm-{{ uid }}__boton:hover {
+    filter: brightness(1.15);
+    transform: translateY(-2px);
+  }
+
+  .fnm-{{ uid }}__boton:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 3px;
+  }
+
+  /* ---- los seis cuadros ---- */
+
+  .fnm-{{ uid }}__grilla {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(14px, 1.7vw, 24px);
+    /* no se estira a lo ancho de la pantalla, y va centrado */
+    max-width: {{ section.settings.cards_width }}px;
+    margin-inline: auto;
+  }
+
+  .fnm-{{ uid }}__cuadro {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    /* izquierda el contenido, derecha la foto */
+    display: grid;
+    grid-template-columns: {{ tw }}% {{ tw_resto }}%;
+    min-height: clamp(132px, 11vw, 172px);
+    border-radius: clamp(16px, 1.8vw, 24px);
+    background-color: #1c191d;
+    background-image: var(--fnm-cuadro-foto, none);
+    /* por el alto en vez de recortar: la foto se ve un poco mas lejos
+       y entera de arriba a abajo. El sobrante queda a la izquierda,
+       debajo del negro. */
+    background-size: auto {{ section.settings.photo_zoom }}%;
+    background-position: right center;
+    background-repeat: no-repeat;
+    box-shadow: 0 16px 34px rgba(0, 0, 0, .42);
+  }
+
+  /* difuminado negro desde la izquierda: tapa el lado del texto y
+     se apaga justo en la linea roja, dejando la foto limpia */
+  .fnm-{{ uid }}__cuadro::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, {{ section.settings.card_opacity | times: 0.01 }}) 0%,
+      rgba(0, 0, 0, {{ section.settings.card_opacity | times: 0.01 }}) {{ fade_ini }}%,
+      rgba(0, 0, 0, 0) {{ fade_fin }}%
+    );
+  }
+
+  {%- if section.settings.show_divider -%}
+  /* la linea roja al centro, de alto completo */
+  .fnm-{{ uid }}__cuadro::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: {{ tw }}%;
+    z-index: 2;
+    width: 3px;
+    transform: translateX(-50%);
+    background: {{ section.settings.accent_color }};
+  }
+  {%- endif -%}
+
+  .fnm-{{ uid }}__cuadro-cuerpo {
+    position: relative;
+    z-index: 2;
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    /* el texto agrupado al centro, cerca del titulo */
+    justify-content: center;
+    gap: clamp(10px, 1vw, 15px);
+    padding: clamp(16px, 1.6vw, 26px) clamp(10px, .95vw, 15px);
+  }
+
+  .fnm-{{ uid }}__cuadro-titulo {
+    margin: 0;
+    color: #ffffff;
+    font-family: var(--font-heading--family, sans-serif);
+    font-size: clamp(17px, 1.62vw, 23px);
+    line-height: 1.22;
+    /* pegado a la izquierda, alineado con la viñeta de abajo */
+    text-align: left;
+    text-transform: uppercase;
+    /* por si la foto de atras es clara */
+    text-shadow: 0 2px 10px rgba(0, 0, 0, .75);
+  }
+
+  /* viñeta propia: el punto queda alineado con el título y las
+     líneas siguientes caen debajo del texto, no debajo del punto */
+  .fnm-{{ uid }}__cuadro-lista {
+    margin: 0;
+    padding-inline-start: 0;
+    list-style: none;
+  }
+
+  .fnm-{{ uid }}__cuadro-lista li {
+    position: relative;
+    padding-inline-start: 14px;
+    color: #e3e3e3;
+    font-size: clamp(13px, 1.05vw, 15px);
+    line-height: 1.45;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, .75);
+  }
+
+  .fnm-{{ uid }}__cuadro-lista li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  @media screen and (max-width: 990px) {
+    .fnm-{{ uid }}__grilla {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .fnm-{{ uid }} {
+      padding-inline: 16px;
+    }
+
+    /* en celular el degradado va de arriba hacia abajo */
+    .fnm-{{ uid }}__velo {
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, {{ v1 }}) 0%,
+        rgba(0, 0, 0, {{ v }}) 45%,
+        rgba(0, 0, 0, {{ v }}) 100%
+      );
+    }
+
+    .fnm-{{ uid }}__logo {
+      margin-inline: auto;
+    }
+
+    .fnm-{{ uid }}__encabezado {
+      text-align: center;
+    }
+
+    .fnm-{{ uid }}__kicker {
+      justify-content: center;
+    }
+
+    .fnm-{{ uid }}__grilla {
+      grid-template-columns: 1fr;
+    }
+
+    .fnm-{{ uid }}__cuadro {
+      min-height: 0;
+    }
+
+    .fnm-{{ uid }}__cuadro-cuerpo {
+      padding: 18px 12px 18px 16px;
+      gap: 12px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Forza · Nuestras motos",
+  "tag": "section",
+  "class": "section-forza-nuestras-motos",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Foto de fondo"
+    },
+    {
+      "type": "select",
+      "id": "background_position",
+      "label": "Encuadre de la foto",
+      "options": [
+        { "value": "center center", "label": "Centro" },
+        { "value": "right center", "label": "Derecha" },
+        { "value": "left center", "label": "Izquierda" },
+        { "value": "center top", "label": "Arriba" },
+        { "value": "center bottom", "label": "Abajo" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Va arriba a la derecha, donde el fondo es claro, así que sirve el logo negro."
+    },
+    {
+      "type": "checkbox",
+      "id": "logo_white",
+      "label": "Pintar el logo de blanco",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Antetítulo",
+      "default": "La diferencia"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Título, primera línea",
+      "default": "Nuestras"
+    },
+    {
+      "type": "text",
+      "id": "title_bottom",
+      "label": "Título, segunda línea",
+      "info": "Se muestra en el color de acento.",
+      "default": "Motos"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Bajada",
+      "default": "Tu trabajo, tu camino, tu libertad."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón",
+      "default": "Conoce más"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace del botón"
+    },
+    { "type": "header", "content": "Cuadro 01" },
+    { "type": "text", "id": "card_1_title", "label": "Título", "default": "Motor Forza" },
+    { "type": "text", "id": "card_1_text", "label": "Texto", "default": "12,000 km o 12 meses de garantía." },
+    { "type": "image_picker", "id": "card_1_image", "label": "Foto de fondo" },
+    { "type": "header", "content": "Cuadro 02" },
+    { "type": "text", "id": "card_2_title", "label": "Título", "default": "Tablero Digital" },
+    { "type": "text", "id": "card_2_text", "label": "Texto", "default": "Tecnología avanzada de seguridad." },
+    { "type": "image_picker", "id": "card_2_image", "label": "Foto de fondo" },
+    { "type": "header", "content": "Cuadro 03" },
+    { "type": "text", "id": "card_3_title", "label": "Título", "default": "Foco con Luz Led" },
+    { "type": "text", "id": "card_3_text", "label": "Texto", "default": "Diseño y variedad de modelos." },
+    { "type": "image_picker", "id": "card_3_image", "label": "Foto de fondo" },
+    { "type": "header", "content": "Cuadro 04" },
+    { "type": "text", "id": "card_4_title", "label": "Título", "default": "Puerto USB" },
+    { "type": "text", "id": "card_4_text", "label": "Texto", "default": "Conectividad y practicidad." },
+    { "type": "image_picker", "id": "card_4_image", "label": "Foto de fondo" },
+    { "type": "header", "content": "Cuadro 05" },
+    { "type": "text", "id": "card_5_title", "label": "Título", "default": "Disco Delantero" },
+    { "type": "text", "id": "card_5_text", "label": "Texto", "default": "Frenado confiable." },
+    { "type": "image_picker", "id": "card_5_image", "label": "Foto de fondo" },
+    { "type": "header", "content": "Cuadro 06" },
+    { "type": "text", "id": "card_6_title", "label": "Título", "default": "Barras de Protección" },
+    { "type": "text", "id": "card_6_text", "label": "Texto", "default": "Pensadas para el día a día." },
+    { "type": "image_picker", "id": "card_6_image", "label": "Foto de fondo" },
+    { "type": "header", "content": "Apariencia" },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Rojo Forza",
+      "default": "#AF190F"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Oscurecer el lado izquierdo",
+      "min": 40,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 91
+    },
+    {
+      "type": "range",
+      "id": "cards_width",
+      "label": "Ancho de la fila de cuadros",
+      "info": "Quedan pegados a la izquierda; esto define hasta dónde llegan.",
+      "min": 700,
+      "max": 1900,
+      "step": 20,
+      "unit": "px",
+      "default": 1180
+    },
+    {
+      "type": "range",
+      "id": "text_width",
+      "label": "Ancho del área de texto",
+      "info": "Más ancho deja los títulos en una línea; menos deja ver más foto.",
+      "min": 40,
+      "max": 75,
+      "step": 1,
+      "unit": "%",
+      "default": 63
+    },
+    {
+      "type": "range",
+      "id": "photo_zoom",
+      "label": "Acercamiento de la foto",
+      "info": "100% la muestra entera de arriba a abajo. Más alto la acerca.",
+      "min": 100,
+      "max": 170,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Línea roja al centro del cuadro",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "card_opacity",
+      "label": "Negro detrás del texto",
+      "info": "El degradado arranca con este valor y se apaga en la línea roja.",
+      "min": 40,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 92
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacio arriba",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio abajo",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    { "name": "Forza · Nuestras motos" }
+  ]
+}
+{% endschema %}
