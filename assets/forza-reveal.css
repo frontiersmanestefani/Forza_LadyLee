@@ -1,0 +1,9 @@
+/* Aparición suave de secciones al hacer scroll */
+@media (prefers-reduced-motion: no-preference) {
+  .fz-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);
+  }
+  .fz-reveal.fz-in { opacity: 1; transform: none; }
+}
